@@ -17,18 +17,19 @@ namespace Garage20.Controllers
         // GET: Vehicles
         public ActionResult Index(string search = "")
         {
-            //var query = Enumerable.Empty<Vehicle>().AsQueryable();
-            //if (search == "")
-            //{
-            //    query = db.Vehicles;
-            //} else
-            //{
-            //    query = db.Vehicles.Where(x => x.RegNo.Contains(search));
-            //}
+            var query = Enumerable.Empty<Vehicle>().AsQueryable();
+            if (search == "")
+            {
+                query = db.Vehicles;
+            }
+            else
+            {
+                query = db.Vehicles.Where(x => x.RegNo.Contains(search));
+            }
 
 
-            //return View(query.ToList());
-            return View();
+            return View(query.ToList());
+           
         }
 
         // GET: Vehicles/Details/5
@@ -117,7 +118,7 @@ namespace Garage20.Controllers
         }
 
         // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOutConfirmed(int id)
         {
