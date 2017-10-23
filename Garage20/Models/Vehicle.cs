@@ -9,7 +9,7 @@ namespace Garage20.Models
     {
 
         public int Id { get; set; }
-        public string Type { get; set; }
+        public VehicleType Type { get; set; }
         public string RegNo { get; set; }
         public string Color { get; set; }
         public int NoWheels { get; set; }
