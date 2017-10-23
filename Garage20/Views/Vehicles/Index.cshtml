@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Garage20.Models.Vehicle>
 
 @{
-    ViewBag.Title = "Wel come to our Garage";
+    ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>List Of Vechicles</h2>
+<h2>Vehicle Register</h2>
 
 <div class="panel panel-default">
     <div class="panel-heading">Search in garage</div>
@@ -23,7 +23,7 @@
 
 
 <p>
-    @Html.ActionLink("Park Vechiel", "Park")
+    @Html.ActionLink("Park Vehicle", "Park")
 </p>
 <table class="table">
     <tr>
@@ -78,7 +78,7 @@
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("CheckOut", "CheckOut", new { id = item.Id })
+                @Html.ActionLink("Check Out", "CheckOut", new { id = item.Id })
             </td>
         </tr>
     }
