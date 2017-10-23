@@ -107,7 +107,7 @@ namespace Garage20.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOutonfirmed(int id)
+        public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
             db.Vehicles.Remove(vehicle);
