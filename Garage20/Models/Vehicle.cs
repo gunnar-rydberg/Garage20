@@ -11,7 +11,7 @@ namespace Garage20.Models
     {
 
         public int Id { get; set; }
-        public string Type { get; set; }
+        public VehicleType Type { get; set; }
         [Required]
         public string RegNo { get; set; }
         [Required]

@@ -17,17 +17,18 @@ namespace Garage20.Controllers
         // GET: Vehicles
         public ActionResult Index(string search = "")
         {
-            var query = Enumerable.Empty<Vehicle>().AsQueryable();
-            if (search == "")
-            {
-                query = db.Vehicles;
-            } else
-            {
-                query = db.Vehicles.Where(x => x.RegNo.Contains(search));
-            }
+            //var query = Enumerable.Empty<Vehicle>().AsQueryable();
+            //if (search == "")
+            //{
+            //    query = db.Vehicles;
+            //} else
+            //{
+            //    query = db.Vehicles.Where(x => x.RegNo.Contains(search));
+            //}
 
 
-            return View(query.ToList());
+            //return View(query.ToList());
+            return View();
         }
 
         // GET: Vehicles/Details/5
@@ -56,7 +57,7 @@ namespace Garage20.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Park([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date")] Vehicle vehicle)
+        public ActionResult Park([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
