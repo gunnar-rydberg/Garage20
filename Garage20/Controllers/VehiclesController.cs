@@ -36,7 +36,7 @@ namespace Garage20.Controllers
         }
 
         // GET: Vehicles/Create
-        public ActionResult Create()
+        public ActionResult Park()
         {
             return View();
         }
@@ -90,7 +90,7 @@ namespace Garage20.Controllers
         }
 
         // GET: Vehicles/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult CheckOut(int? id)
         {
             if (id == null)
             {
@@ -107,7 +107,7 @@ namespace Garage20.Controllers
         // POST: Vehicles/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult CheckOutonfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
             db.Vehicles.Remove(vehicle);
