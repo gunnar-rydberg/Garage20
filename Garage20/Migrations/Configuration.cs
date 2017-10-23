@@ -15,18 +15,55 @@ namespace Garage20.Migrations
 
         protected override void Seed(Garage20.Models.Garage20Context context)
         {
-            //  This method will be called after migrating to the latest version.
 
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+            context.Vehicles.AddOrUpdate(
+                x => x.Id,
+                new Models.Vehicle()
+                {
+                    Id = 1,
+                    RegNo = "AAA-111",
+                    Type = VehicleType.Car,
+                    Brand = "Saab",
+                    Model = "9000",
+                    Color = "Silver",
+                    NoWheels = 4,
+                    Date = new DateTime(2000, 12, 16)
+                },
+                new Models.Vehicle()
+                {
+                    Id = 2,
+                    RegNo = "BBB-111",
+                    Type = VehicleType.Car,
+                    Brand = "Saab",
+                    Model = "900",
+                    Color = "Silver",
+                    NoWheels = 4,
+                    Date = new DateTime(1999, 12, 16)
+                },
+                new Models.Vehicle()
+                {
+                    Id = 3,
+                    RegNo = "BBB-222",
+                    Type = VehicleType.Car,
+                    Brand = "Volkswagen",
+                    Model = "Golf",
+                    Color = "Red",
+                    NoWheels = 4,
+                    Date = new DateTime(2017, 10, 23)
+                },
+                new Models.Vehicle()
+                {
+                    Id = 4,
+                    RegNo = "ZZZ-222",
+                    Type = VehicleType.Motorcycle,
+                    Brand = "Yamaha",
+                    Model = "Tracer 700",
+                    Color = "Red",
+                    NoWheels = 2,
+                    Date = new DateTime(2017, 10, 23)
+                }
+
+     );
         }
     }
 }
