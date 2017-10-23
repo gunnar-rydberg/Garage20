@@ -15,9 +15,19 @@ namespace Garage20.Controllers
         private Garage20Context db = new Garage20Context();
 
         // GET: Vehicles
-        public ActionResult Index()
+        public ActionResult Index(string search = "")
         {
-            return View(db.Vehicles.ToList());
+            var query = Enumerable.Empty<Vehicle>().AsQueryable();
+            if (search == "")
+            {
+                query = db.Vehicles;
+            } else
+            {
+                query = db.Vehicles.Where(x => x.RegNo.Contains(search));
+            }
+
+
+            return View(query.ToList());
         }
 
         // GET: Vehicles/Details/5
