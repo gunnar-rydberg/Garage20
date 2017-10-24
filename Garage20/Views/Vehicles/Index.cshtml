@@ -1,29 +1,39 @@
 ﻿@model IEnumerable<Garage20.Models.Vehicle>
 
 @{
-    ViewBag.Title = "Wel come to our Garage";
+    ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>List Of Vechicles</h2>
+<h2>Vehicle Register</h2>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Search in garage</div>
-    <div class="panel-body">
-        @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
-        {
+@using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <p>
                 Reg.no: @Html.TextBox("search")
                 <input type="submit" value="Search" />
+                <!-- NOTE! you cannot use button tag because it will post the form -->
+                <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
             </p>
-        }
-
+        </div>
+        <div class="panel-body">
+            <div id="extended-search-panel" class="collapse">
+                <p>
+                    Brand: @Html.TextBox("searchBrand")
+                    Model: @Html.TextBox("searchModel")
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+
+}
+
 
 
 
 <p>
-    @Html.ActionLink("Park Vechiel", "Park")
+    @Html.ActionLink("Park Vehicle", "Park")
 </p>
 <table class="table">
     <tr>
@@ -37,22 +47,13 @@
             @Html.DisplayNameFor(model => model.Color)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NoWheels)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Model)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Brand)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.Date)
         </th>
         <th></th>
     </tr>
 
     @foreach (var item in Model)
-    {
+            {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
@@ -64,21 +65,12 @@
                 @Html.DisplayFor(modelItem => item.Color)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NoWheels)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Model)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Brand)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("CheckOut", "CheckOut", new { id = item.Id })
+                @Html.ActionLink("Check Out", "CheckOut", new { id = item.Id })
             </td>
         </tr>
     }
