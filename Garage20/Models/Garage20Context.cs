@@ -21,6 +21,7 @@ namespace Garage20.Models
 
         public System.Data.Entity.DbSet<Garage20.Models.Vehicle> Vehicles { get; set; }
 
-     
+        public System.Data.Entity.DbSet<Garage20.Models.ParkingLot> Parking { get; set; }
+
     }
 }

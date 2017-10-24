@@ -61,9 +61,22 @@ namespace Garage20.Migrations
                     Color = "Red",
                     NoWheels = 2,
                     Date = new DateTime(2017, 10, 23)
-                }
+                });
 
-     );
+            const int NUMBER_OF_PARKINGSPACES = 100;
+
+            for (int i = 0; i < NUMBER_OF_PARKINGSPACES; i++)
+            {
+                var vehicleId = context.Vehicles.OrderBy(x => x.Id)
+                                                .Select(x => (int?)x.Id)
+                                                .Skip(i)
+                                                .DefaultIfEmpty(null)
+                                                .First();
+                context.Parking.AddOrUpdate(
+                    x => x.Id,
+                    new Models.ParkingLot() { Id = i, VehicleId = vehicleId });
+
+            }
         }
     }
 }
