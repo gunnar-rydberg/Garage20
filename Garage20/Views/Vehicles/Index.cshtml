@@ -1,21 +1,33 @@
 ﻿@model IEnumerable<Garage20.Models.Vehicle>
 
 @{
-    ViewBag.Title = "Wel come to our Garage";
+    ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>List Of Vechicles</h2>
+<h2>Vehicle Register</h2>
 
-<div class="panel panel-default">
-    <div class="panel-heading">Search in garage</div>
-    <div class="panel-body">
-        @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
-        {
+@using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
             <p>
                 Reg.no: @Html.TextBox("search")
                 <input type="submit" value="Search" />
+                <!-- NOTE! you cannot use button tag because it will post the form -->
+                <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
             </p>
-        }
+        </div>
+        <div class="panel-body">
+            <div id="extended-search-panel" class="collapse">
+                <p>
+                    Brand: @Html.TextBox("searchBrand")
+                    Model: @Html.TextBox("searchModel")
+                </p>
+            </div>
+        </div>
+    </div>
+
+}
 
 
 

@@ -12,24 +12,24 @@ namespace Garage20.Controllers
 {
     public class VehiclesController : Controller
     {
+        private const decimal HOURLY_PRICE = 10;
+
         private Garage20Context db = new Garage20Context();
 
         // GET: Vehicles
-        public ActionResult Index(string search = "")
+        public ActionResult Index(string search = "", string searchBrand = "", string searchModel = "")
         {
             var query = Enumerable.Empty<Vehicle>().AsQueryable();
-            if (search == "")
-            {
-                query = db.Vehicles;
-            }
-            else
-            {
+            query = db.Vehicles;
+            if (search != "")
                 query = db.Vehicles.Where(x => x.RegNo.Contains(search));
-            }
-
+            if (searchBrand != "")
+                query = query.Where(x => x.Brand.Contains(searchBrand));
+            if (searchModel != "")
+                query = query.Where(x => x.Model.Contains(searchModel));
 
             return View(query.ToList());
-           
+
         }
 
         // GET: Vehicles/Details/5
@@ -86,6 +86,8 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
+       
+
         // POST: Vehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,15 +120,32 @@ namespace Garage20.Controllers
         }
 
         // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("CheckOut")]
+        [HttpPost, ActionName("CheckOutConfirmed")]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            var receipt = new Models.Receipt()
+            {
+                CheckoutTimestamp = DateTime.Now,
+                Vehicle = vehicle,
+            };
+            receipt.TotalParkingTime = receipt.CheckoutTimestamp - receipt.Vehicle.Date;
+            receipt.Price =  (int)Math.Ceiling(receipt.TotalParkingTime.TotalHours) * HOURLY_PRICE;
+
+
+
+            //db.Vehicles.Remove(vehicle);
+            //db.SaveChanges();
+
+            return View("Receipt", receipt);
+            //return RedirectToAction("Receipt", receipt);
+            //return RedirectToAction("Index");
         }
+
+       
+     
 
         protected override void Dispose(bool disposing)
         {
