@@ -29,6 +29,10 @@ namespace Garage20.Controllers
             if (searchModel != "")
                 query = query.Where(x => x.Model.Contains(searchModel));
 
+            //TODO: Create new view model and place parkinglot status info there instead of using viewbag
+            ViewBag.ParkingLotTotalSpace = db.Parking.Count();
+            ViewBag.ParkingLotFreeSpace = db.Parking.Where(x => !x.VehicleId.HasValue).Count();
+
             return View(query.ToList());
 
         }
@@ -65,7 +69,14 @@ namespace Garage20.Controllers
             {
                 vehicle.Date = DateTime.Now;
                 db.Vehicles.Add(vehicle);
+                //db.SaveChanges();
+
+                var freeParkingspace = db.Parking.Where(x => !x.VehicleId.HasValue).First();
+                freeParkingspace.VehicleId = vehicle.Id;
+                db.Entry(freeParkingspace).State = EntityState.Modified;
+
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
