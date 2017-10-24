@@ -65,11 +65,11 @@ namespace Garage20.Migrations
 
             const int NUMBER_OF_PARKINGSPACES = 100;
 
-            for (int i = 0; i < NUMBER_OF_PARKINGSPACES; i++)
+            for (int i = 1; i <= NUMBER_OF_PARKINGSPACES; i++)
             {
                 var vehicleId = context.Vehicles.OrderBy(x => x.Id)
                                                 .Select(x => (int?)x.Id)
-                                                .Skip(i)
+                                                .Skip(i-1)
                                                 .DefaultIfEmpty(null)
                                                 .First();
                 context.Parking.AddOrUpdate(
