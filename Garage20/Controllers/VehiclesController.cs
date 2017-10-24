@@ -12,6 +12,8 @@ namespace Garage20.Controllers
 {
     public class VehiclesController : Controller
     {
+        private const decimal HOURLY_PRICE = 10;
+
         private Garage20Context db = new Garage20Context();
 
         // GET: Vehicles
@@ -121,9 +123,23 @@ namespace Garage20.Controllers
         public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+            var receipt = new Models.Receipt()
+            {
+                CheckoutTimestamp = DateTime.Now,
+                Vehicle = vehicle,
+            };
+            receipt.TotalParkingTime = receipt.CheckoutTimestamp - receipt.Vehicle.Date;
+            receipt.Price =  (int)Math.Ceiling(receipt.TotalParkingTime.TotalHours) * HOURLY_PRICE;
+
+
+
+            //db.Vehicles.Remove(vehicle);
+            //db.SaveChanges();
+
+            return View("Receipt", receipt);
+            //return RedirectToAction("Receipt", receipt);
+            //return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
