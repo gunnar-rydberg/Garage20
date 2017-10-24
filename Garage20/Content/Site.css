@@ -3,7 +3,11 @@
     padding-bottom: 20px;
 }
 
-
+@media print{
+    .hidden-when-printing{
+        display: none;
+    }
+}
 
 
 /* Set padding to keep content from hitting the edges */

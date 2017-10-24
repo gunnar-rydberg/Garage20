@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Garage20.Models;
+using Garage20.Utility;
 
 namespace Garage20.Controllers
 {
@@ -86,7 +87,7 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-       
+
 
         // POST: Vehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -126,22 +127,16 @@ namespace Garage20.Controllers
         {
             Vehicle vehicle = db.Vehicles.Find(id);
 
-            var receipt = new Models.Receipt()
-            {
-                CheckoutTimestamp = DateTime.Now,
-                Vehicle = vehicle,
-            };
-            receipt.TotalParkingTime = receipt.CheckoutTimestamp - receipt.Vehicle.Date;
-            receipt.Price =  (int)Math.Ceiling(receipt.TotalParkingTime.TotalHours) * HOURLY_PRICE;
+            var receipt = CalculatPrice.Calculator(vehicle);
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
 
             return View("Receipt", receipt);
-            //return RedirectToAction("Receipt", receipt);
-            //return RedirectToAction("Index");
+
         }
 
-      
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
