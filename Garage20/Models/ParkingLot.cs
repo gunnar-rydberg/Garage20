@@ -9,5 +9,7 @@ namespace Garage20.Models
     {
         public int Id { get; set; }
         public int? VehicleId { get; set; }
+        public int? MotorCycleId1 { get; set; }
+        public int? MotorCycleId2 { get; set; }
     }
 }

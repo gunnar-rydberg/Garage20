@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201710241738194_Add_parkinglots.Designer.cs">
       <DependentUpon>201710241738194_Add_parkinglots.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201710241938432_Update_parkinglots.cs" />
+    <Compile Include="Migrations\201710241938432_Update_parkinglots.Designer.cs">
+      <DependentUpon>201710241938432_Update_parkinglots.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Garage20Context.cs" />
     <Compile Include="Models\ParkingLot.cs" />
@@ -316,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201710241738194_Add_parkinglots.resx">
       <DependentUpon>201710241738194_Add_parkinglots.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201710241938432_Update_parkinglots.resx">
+      <DependentUpon>201710241938432_Update_parkinglots.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
