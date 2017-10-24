@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+
+
+#tblVehicles th:hover {
+    cursor: pointer;
+    color: darkorange;
+}
