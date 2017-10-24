@@ -7,18 +7,33 @@
 <h2>Vehicle Register</h2>
 
 <div class="panel panel-default">
-    <div class="panel-heading">Search in garage</div>
-    <div class="panel-body">
+    <div class="panel-heading">
         @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
-        {
+            {
             <p>
                 Reg.no: @Html.TextBox("search")
                 <input type="submit" value="Search" />
             </p>
         }
-
     </div>
 </div>
+
+@using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
+{
+    <p>
+        Reg.no: @Html.TextBox("search")
+        <input type="submit" value="Search" />
+        <!-- NOTE! you cannot use button tag because it will post the form -->
+        <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
+    </p>
+            <div id="extended-search-panel" class="collapse">
+                <p>
+                    Brand: @Html.TextBox("searchBrand")
+                    Model: @Html.TextBox("searchModel")
+                </p>
+            </div>
+}
+
 
 
 
