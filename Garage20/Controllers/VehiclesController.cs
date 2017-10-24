@@ -69,12 +69,11 @@ namespace Garage20.Controllers
             {
                 vehicle.Date = DateTime.Now;
                 db.Vehicles.Add(vehicle);
-                //db.SaveChanges();
+                db.SaveChanges(); //Note! vehicle.Id is 0 until after db.SaveChanges()
 
-                var freeParkingspace = db.Parking.Where(x => !x.VehicleId.HasValue).First();
+                var freeParkingspace = db.Parking.Where(x => !x.VehicleId.HasValue).First(); //TODO Check if parkinglot has empty space
                 freeParkingspace.VehicleId = vehicle.Id;
                 db.Entry(freeParkingspace).State = EntityState.Modified;
-
                 db.SaveChanges();
 
                 return RedirectToAction("Index");
@@ -141,6 +140,11 @@ namespace Garage20.Controllers
             var receipt = CalculatPrice.Calculator(vehicle);
 
             db.Vehicles.Remove(vehicle);
+
+            var parkingSpace = db.Parking.Where(x => x.VehicleId == vehicle.Id).First(); //TODO should never happen, but check if vehicle is in parkingLot
+            parkingSpace.VehicleId = null;
+            db.Entry(parkingSpace).State = EntityState.Modified;
+
             db.SaveChanges();
 
             return View("Receipt", receipt);
