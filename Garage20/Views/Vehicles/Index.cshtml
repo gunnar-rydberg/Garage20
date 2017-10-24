@@ -11,11 +11,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <p>
-                Reg.no: @Html.TextBox("search")
-                <input type="submit" value="Search" />
-                <!-- NOTE! you cannot use button tag because it will post the form -->
-                <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
-            </p>
+                <div class="form-inline">
+                    Reg.no: @Html.TextBox("search", null, new { @class = "form-control" })
+                    <div class="btn-group">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <!-- NOTE! you cannot use button tag because it will post the form -->
+                        <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
+                    </div>
+
+                    @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info pull-right" })
+                </div>
+</p>
         </div>
         <div class="panel-body">
             <div id="extended-search-panel" class="collapse">
@@ -24,18 +30,15 @@
                     Model: @Html.TextBox("searchModel")
                 </p>
             </div>
-        </div>
-    </div>
-
-}
 
 
 
 
 
-        <p>
-            @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info" })
-        </p>
+
+
+
+
         <table class="table" id="tblVehicles">
             <tr>
                 <th onclick="sortTable(0)">
@@ -99,4 +102,5 @@
 
     </div>
 </div>
+}
 <script src="~/Scripts/garage.js"></script>
