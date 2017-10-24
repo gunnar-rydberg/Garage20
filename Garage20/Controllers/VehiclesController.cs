@@ -29,7 +29,7 @@ namespace Garage20.Controllers
 
 
             return View(query.ToList());
-           
+
         }
 
         // GET: Vehicles/Details/5
@@ -86,6 +86,8 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
+       
+
         // POST: Vehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -118,15 +120,32 @@ namespace Garage20.Controllers
         }
 
         // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("CheckOut")]
+        [HttpPost, ActionName("CheckOutConfirmed")]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOutConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+
+
+            var KvittView = new Models.KvittoViewModel()
+            {
+               
+                TimeIn = vehicle.Date,
+                TimeOut= DateTime.Now,
+
+            };
+            //db.Vehicles.Remove(vehicle);
+            //db.SaveChanges();
+
+            //return RedirectToAction("Index");
+
+            return RedirectToAction("Kvitto", KvittView);
+           
+
         }
+
+       
+     
 
         protected override void Dispose(bool disposing)
         {
@@ -136,5 +155,7 @@ namespace Garage20.Controllers
             }
             base.Dispose(disposing);
         }
+
+
     }
 }
