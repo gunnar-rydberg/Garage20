@@ -31,5 +31,7 @@ textarea {
 }
 
 
-
-
+#tblVehicles th:hover {
+    cursor: pointer;
+    color: darkorange;
+}

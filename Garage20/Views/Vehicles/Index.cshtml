@@ -11,11 +11,17 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <p>
-                Reg.no: @Html.TextBox("search")
-                <input type="submit" value="Search" />
-                <!-- NOTE! you cannot use button tag because it will post the form -->
-                <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
-            </p>
+                <div class="form-inline">
+                    Reg.no: @Html.TextBox("search", null, new { @class = "form-control" })
+                    <div class="btn-group">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <!-- NOTE! you cannot use button tag because it will post the form -->
+                        <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
+                    </div>
+
+                    @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info pull-right" })
+                </div>
+</p>
         </div>
         <div class="panel-body">
             <div id="extended-search-panel" class="collapse">
@@ -24,55 +30,77 @@
                     Model: @Html.TextBox("searchModel")
                 </p>
             </div>
-        </div>
-    </div>
-
-}
 
 
 
 
-<p>
-    @Html.ActionLink("Park Vehicle", "Park")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RegNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Color)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Date)
-        </th>
-        <th></th>
-    </tr>
 
-    @foreach (var item in Model)
+
+
+
+
+        <table class="table" id="tblVehicles">
+            <tr>
+                <th onclick="sortTable(0)">
+                    @Html.DisplayNameFor(model => model.Type)
+                    @*@Html.ActionLink("Type", "Sort", new { sortOrder = ViewBag.SortTypeOrder, column = "type" })*@
+                </th>
+                <th onclick="sortTable(1)">
+                    @Html.DisplayNameFor(model => model.RegNo)
+                </th>
+                <th onclick="sortTable(2)">
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th onclick="sortTable(3)">
+                    @Html.DisplayNameFor(model => model.NoWheels)
+                </th>
+                <th onclick="sortTable(4)">
+                    @Html.DisplayNameFor(model => model.Model)
+                </th>
+                <th onclick="sortTable(5)">
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
+                <th onclick="sortTable(6)">
+                    @Html.DisplayNameFor(model => model.Date)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
             {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.RegNo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Color)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                @Html.ActionLink("Check Out", "CheckOut", new { id = item.Id })
-            </td>
-        </tr>
-    }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RegNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NoWheels)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Model)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                        @Html.ActionLink("CheckOut", "CheckOut", new { id = item.Id })
+                    </td>
+                </tr>
+            }
 
-</table>
+        </table>
+
+    </div>
+</div>
+}
+<script src="~/Scripts/garage.js"></script>

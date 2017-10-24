@@ -147,5 +147,71 @@ namespace Garage20.Controllers
         }
 
 
+        //public ActionResult Sort(string sortOrder, string column)
+        //{
+        //    var vehicles = new List<Vehicle>();
+        //    //var vehicles = db.Vehicles.ToList().ToList();
+
+        //    if (sortOrder == null || sortOrder == "desc")
+        //    {
+        //        switch (column)
+        //        {
+        //            case "type":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Type).ToList();
+        //                break;
+        //            case "regno":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.RegNo).ToList();
+        //                break;
+        //            case "color":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Color).ToList();
+        //                break;
+        //            case "nowheels":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.NoWheels).ToList();
+        //                break;
+        //            case "model":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Model).ToList();
+        //                break;
+        //            case "brand":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Brand).ToList();
+        //                break;
+        //            case "date":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Date).ToList();
+        //                break;
+        //        }
+        //        ViewBag.SortTypeOrder = "asc";
+        //     //   ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet";
+        //    }
+        //    else
+        //    {
+        //        switch (column)
+        //        {
+        //            case "type":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Type).ToList();
+        //                break;
+        //            case "regno":
+        //                vehicles = db.Vehicles.OrderBy(e => e.RegNo).ToList();
+        //                break;
+        //            case "color":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Color).ToList();
+        //                break;
+        //            case "nowheels":
+        //                vehicles = db.Vehicles.OrderBy(e => e.NoWheels).ToList();
+        //                break;
+        //            case "model":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Model).ToList();
+        //                break;
+        //            case "brand":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Brand).ToList();
+        //                break;
+        //            case "date":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Date).ToList();
+        //                break;
+        //        }
+        //        ViewBag.SortTypeOrder = "desc";
+        //    //    ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet-alt";
+        //    }
+
+        //    return View("Index", vehicles);
+        //}
     }
 }
