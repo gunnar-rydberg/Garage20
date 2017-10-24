@@ -120,7 +120,7 @@ namespace Garage20.Controllers
         }
 
         // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("CheckOutConfirmed")]
+        [HttpPost, ActionName("CheckOut")]
         [ValidateAntiForgeryToken]
         public ActionResult CheckOutConfirmed(int id)
         {
@@ -133,18 +133,15 @@ namespace Garage20.Controllers
             };
             receipt.TotalParkingTime = receipt.CheckoutTimestamp - receipt.Vehicle.Date;
             receipt.Price =  (int)Math.Ceiling(receipt.TotalParkingTime.TotalHours) * HOURLY_PRICE;
-
-
-
-            //db.Vehicles.Remove(vehicle);
-            //db.SaveChanges();
+            db.Vehicles.Remove(vehicle);
+            db.SaveChanges();
 
             return View("Receipt", receipt);
             //return RedirectToAction("Receipt", receipt);
             //return RedirectToAction("Index");
         }
 
-       
+      
         protected override void Dispose(bool disposing)
         {
             if (disposing)
