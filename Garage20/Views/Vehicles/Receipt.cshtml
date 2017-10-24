@@ -37,6 +37,6 @@
     </dl>
 </div>
 <p class="hidden-when-printing">
-    @Html.ActionLink("Back to List", "Index")
-    @Html.ActionLink("Open in PDF", "PDFView")
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default"})
+    <button class="btn btn-default" onclick="javascript:window.print()">Print</button>
 </p>
