@@ -8,7 +8,8 @@ namespace Garage20.Utility
 {
     public static class CalculatPrice
     {
-        public static int HOURLY_PRICE = 2; 
+        public static int HOURLY_PRICE = 2;
+       
 
         public static Receipt Calculator (Vehicle vehicle)
         {

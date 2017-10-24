@@ -34,9 +34,17 @@
             @Html.DisplayFor(model => model.Price)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalParkingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalParkingTime)
+        </dd>
+
     </dl>
 </div>
 <p class="hidden-when-printing">
     @Html.ActionLink("Back to List", "Index")
-    @Html.ActionLink("Open in PDF", "PDFView")
+    <A HREF="javascript:window.print()">Click to Print Recipt</A>
 </p>

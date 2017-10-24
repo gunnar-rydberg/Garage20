@@ -13,7 +13,7 @@ namespace Garage20.Controllers
 {
     public class VehiclesController : Controller
     {
-        private const decimal HOURLY_PRICE = 10;
+       
 
         private Garage20Context db = new Garage20Context();
 
@@ -136,7 +136,7 @@ namespace Garage20.Controllers
 
         }
 
-
+      
         protected override void Dispose(bool disposing)
         {
             if (disposing)
