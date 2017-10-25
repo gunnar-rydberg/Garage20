@@ -17,6 +17,13 @@ namespace Garage20.Controllers
 
         private Garage20Context db = new Garage20Context();
 
+        private GarageHandler garage;
+
+        public VehiclesController()
+        {
+            garage = new GarageHandler(db); //TODO Read up on dependency injection
+        }
+
         // GET: Vehicles
         public ActionResult Index(string search = "", string searchBrand = "", string searchModel = "")
         {
@@ -29,7 +36,10 @@ namespace Garage20.Controllers
             if (searchModel != "")
                 query = query.Where(x => x.Model.Contains(searchModel));
 
+            ViewBag.FreeCapacity = garage.FreeCapacity; //DEBUG: remove in merge?
+
             return View(query.ToList());
+
 
         }
 
@@ -63,9 +73,13 @@ namespace Garage20.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 vehicle.Date = DateTime.Now;
-                db.Vehicles.Add(vehicle);
-                db.SaveChanges();
+                garage.Park(vehicle);
+
+                //db.Vehicles.Add(vehicle);
+                //db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -100,6 +114,7 @@ namespace Garage20.Controllers
             {
                 db.Entry(vehicle).State = EntityState.Modified;
                 db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
             return View(vehicle);
@@ -129,8 +144,10 @@ namespace Garage20.Controllers
 
             var receipt = CalculatPrice.Calculator(vehicle);
 
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
+            garage.CheckOut(vehicle);
+
+            //db.Vehicles.Remove(vehicle);
+            //db.SaveChanges();
 
             return View("Receipt", receipt);
 
