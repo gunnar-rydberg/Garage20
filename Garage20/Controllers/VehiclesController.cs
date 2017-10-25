@@ -51,6 +51,7 @@ namespace Garage20.Controllers
             }
 
             ViewBag.FreeCapacity = garage.FreeCapacity; //DEBUG: remove in merge?
+            ViewBag.TotalCapacity = garage.TotalCapacity;
 
             return View(vec);
         }

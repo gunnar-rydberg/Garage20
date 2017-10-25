@@ -4,7 +4,7 @@
     ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>Vehicle Register Free Capacity: @ViewBag.FreeCapacity</h2>
+<h2>Vehicle Register</h2>
 
 @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
 {
@@ -32,6 +32,8 @@
         </div>
         <div class="panel-body">
 
+        <h4>Vacant parking spaces: @ViewBag.FreeCapacity out of @ViewBag.TotalCapacity</h4>
+        <hr />
 
         <table class="table" id="tblVehicles">
             <tr>
