@@ -19,11 +19,27 @@
         </dd>
 
         <dt>
+            Check In Time:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Date)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CheckoutTimestamp)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CheckoutTimestamp)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalParkingTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalParkingTime)
         </dd>
 
         <dt>
@@ -33,6 +49,7 @@
         <dd>
             @Html.DisplayFor(model => model.Price)
         </dd>
+
 
     </dl>
 </div>
