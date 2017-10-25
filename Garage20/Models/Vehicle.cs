@@ -17,10 +17,12 @@ namespace Garage20.Models
         public string RegNo { get; set; }
         [Required]
         public string Color { get; set; }
-        [RegularExpression("^[0-9]*$", ErrorMessage = "Please write number")]
+       
+        [Range(1, 500, ErrorMessage = "Insert positive integers")]
         public int NoWheels { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }
+        [Display(Name = "Check in time")]
         public DateTime Date { get; set; }
                                           
 
