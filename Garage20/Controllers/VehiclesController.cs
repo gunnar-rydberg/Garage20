@@ -13,7 +13,7 @@ namespace Garage20.Controllers
 {
     public class VehiclesController : Controller
     {
-        private const decimal HOURLY_PRICE = 10;
+
 
         private Garage20Context db = new Garage20Context();
 
@@ -36,9 +36,24 @@ namespace Garage20.Controllers
             if (searchModel != "")
                 query = query.Where(x => x.Model.Contains(searchModel));
 
-            ViewBag.FreeCapacity = garage.FreeCapacity; //DEBUG: remove in merge?
+            var vec = new List<ListViewModel>();
+            foreach (var item in query)
+            {
+                vec.Add(new ListViewModel()
+                {
+                    Id = item.Id,
+                    Color = item.Color,
+                    Type = item.Type,
+                    RegNo = item.RegNo,
+                    ParkingTime = DateTime.Now - item.Date
 
-            return View(query.ToList());
+                });
+            }
+
+            ViewBag.FreeCapacity = garage.FreeCapacity; //DEBUG: remove in merge?
+            return View(vec);
+
+            
 
 
         }
