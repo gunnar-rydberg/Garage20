@@ -1,0 +1,60 @@
+﻿@model Garage20.Models.Statistics
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div>
+    <h4>Statistics</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Types)
+        </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    @foreach (var t in Model.Types)
+                    {
+                        var imgFile = "/Images/" + t.Key + ".svg";
+                        <th><img src="@imgFile" alt="@t.Key" style="width: 10%;" />&nbsp;@t.Key<br /></th>
+                    }
+                </tr>
+                <tr>
+                    @foreach (var t in Model.Types)
+                    {
+                        <td>@t.Value</td>
+                    }
+                </tr>
+            </table>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Wheels)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Wheels)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Time)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Time)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
