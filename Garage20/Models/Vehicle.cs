@@ -18,7 +18,7 @@ namespace Garage20.Models
         [Required]
         public string Color { get; set; }
        
-        [Range(1, 500, ErrorMessage = "Insert positive integers")]
+        [Range(0, 500, ErrorMessage = "Insert positive integers")]
         public int NoWheels { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }

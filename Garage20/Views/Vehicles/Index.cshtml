@@ -4,7 +4,7 @@
     ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>Vehicle Register</h2>
+<h2>List Of Parked Vehicles</h2>
 
 @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
 {
@@ -31,14 +31,6 @@
                 </p>
             </div>
 
-
-
-
-
-
-
-
-
         <table class="table" id="tblVehicles">
             <tr>
                 <th onclick="sortTable(0)">
@@ -51,7 +43,7 @@
                 <th onclick="sortTable(2)">
                     @Html.DisplayNameFor(model => model.Color)
                 </th>
-                <th>
+                <th onclick="sortTable(3)">
                     @Html.DisplayNameFor(model => model.ParkingTime)
                 </th>
                 @*<th onclick="sortTable(3)">
