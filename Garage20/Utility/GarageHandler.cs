@@ -39,6 +39,10 @@ namespace Garage20.Utility
         {
             vehicle.ParkingLots = new List<ParkingLot>();
 
+            var parkingLots = findFreeParkingSpace(vehicleParkingSize(vehicle.Type));
+            parkingLots.ForEach(vehicle.ParkingLots.Add);
+
+            /*
             switch (vehicle.Type)
             {
                 case VehicleType.Motorcycle:
@@ -59,7 +63,7 @@ namespace Garage20.Utility
                         break;
                     }
             }
-
+            */
             db.Vehicles.Add(vehicle);
             db.SaveChanges();
         }
@@ -70,34 +74,75 @@ namespace Garage20.Utility
         /// <param name="vehicle"></param>
         public void CheckOut(Vehicle vehicle)
         {
-            //Remove from parking space
             foreach (var parkingSpace in vehicle.ParkingLots)
             {
-                //var vehicleToCheckOut = parkingSpace.Vehicles.First(x => x.Id == vehicle.Id);
-                //parkingSpace.Vehicles.Remove(vehicleToCheckOut);
                 parkingSpace.Vehicles.Remove(vehicle);
-                //TODO trow exception if ParkingLots is empty on checkout
+                //TODO? throw exception if ParkingLots is empty on checkout
             }
 
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
         }
 
+        /// <summary>
+        /// Find suitable parking space(s) for vehicle of given size
+        /// </summary>
+        private List<ParkingLot> findFreeParkingSpace(decimal size)
+        {
+            var parkingLots = new List<ParkingLot>();
+
+            if(size == 1m)
+            {
+                parkingLots.Add(findFreeParkingSpace());
+            }
+            else if (size > 1m)
+            {
+                parkingLots.AddRange(findFreeParkingSpaceMultiple((int)Decimal.Ceiling(size)));
+            }
+            else if (size < 1m)
+            {
+                parkingLots.Add(
+                    findFreeParkingSubSpace(size) ?? findFreeParkingSpace() );
+            }
+            return parkingLots;
+        }
+
+        /// <summary>
+        /// Find exactly on free parking lot 
+        /// </summary>
         private ParkingLot findFreeParkingSpace()
         {
             return db.ParkingLots.Where(x => !x.Vehicles.Any()).First();
             //TODO throw exception if nothing is found... or other solution
         }
-        private ParkingLot findFreeSubParkingSpace()
+
+        /// <summary>
+        /// Find already used parking lot space where a smaller vehicle can fit
+        /// </summary>
+        private ParkingLot findFreeParkingSubSpace(decimal size)
         {
-            return db.ParkingLots.Where(x => x.Vehicles.Count < 3 &&
-                                              x.Vehicles.All(y => y.Type == VehicleType.Motorcycle))
-                                  .FirstOrDefault();
+            var usedSpaces = db.ParkingLots.Where(x => x.Vehicles.Any())
+                                  .Select(x => new { Id = x.Id, Types = x.Vehicles.Select(y => y.Type) })
+                                  .ToList();
+
+            foreach (var parkingSpace in usedSpaces)
+            {
+                var spaceSum = size;
+                foreach (var vehicleType in parkingSpace.Types)
+                    spaceSum += vehicleParkingSize(vehicleType);
+                if (spaceSum <= 1m)
+                    return db.ParkingLots.Where(x => x.Id == parkingSpace.Id).First();
+            }
+            return null;
         }
 
-        private List<ParkingLot> findFreeParkingSpace(int size)
+        /// <summary>
+        /// find free parking spaces adjacent to each other (use for larger vehicles)
+        /// </summary>
+        private List<ParkingLot> findFreeParkingSpaceMultiple(int size)
         {
-            // finx {size} number of free spaces adjacent to each other
+            //TODO? query db for a List<{Id, bool}> based on free parking space
+            //      then search for adjacent free space in that local list
             for (int i = 0; i < TotalCapacity; i++)
             {
                 var q = db.ParkingLots.OrderBy(x => x.Id)
@@ -106,7 +151,44 @@ namespace Garage20.Utility
                 if (q.All(x => !x.Vehicles.Any()))
                     return q.ToList();
             }
-            return null; //TODO Some error handling
+            return new List<ParkingLot>(); 
+        }
+
+
+        /// <summary>
+        /// Gives parking space size of vehicleType
+        /// </summary>
+        private decimal vehicleParkingSize(VehicleType vehicleType)
+        {
+            switch (vehicleType)
+            {
+                case VehicleType.Car:
+                    return 1m;
+                case VehicleType.Motorcycle:
+                    return 0.32m;
+                case VehicleType.Ships:
+                    return 6m;
+                case VehicleType.Trucks:
+                    return 3m;
+
+                case VehicleType.Armoured:
+                case VehicleType.Combat:
+                case VehicleType.Concrete:
+                case VehicleType.Experimental:
+                case VehicleType.Fictional:
+                case VehicleType.Kit:
+                case VehicleType.Military:
+                case VehicleType.OpenHardware:
+                case VehicleType.Phantom:
+                case VehicleType.Proposed:
+                case VehicleType.Rickshaws:
+                case VehicleType.Scooters:
+                case VehicleType.Streamliners:
+                case VehicleType.UFO:
+                case VehicleType.Unmanned:
+                default:
+                    return 1m;
+            }
         }
 
 
