@@ -15,7 +15,6 @@ namespace Garage20.Models
         [Display(Name = "Reg.No")]
         [Required]
         public string RegNo { get; set; }
-        [Required]
         public string Color { get; set; }
        
         [Range(0, 500, ErrorMessage = "Insert positive integers")]

@@ -19,19 +19,19 @@
         </dd>
 
         <dt>
+            Check In Time:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vehicle.Date)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.CheckoutTimestamp)
         </dt>
 
         <dd>
             @Html.DisplayFor(model => model.CheckoutTimestamp)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Price)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Price)
         </dd>
 
         <dt>
@@ -42,9 +42,18 @@
             @Html.DisplayFor(model => model.TotalParkingTime)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+
     </dl>
 </div>
 <p class="hidden-when-printing">
-    @Html.ActionLink("Back to List", "Index")
-    <A HREF="javascript:window.print()">Click to Print Recipt</A>
+    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default"})
+    <button class="btn btn-default" onclick="javascript:window.print()">Print</button>
 </p>

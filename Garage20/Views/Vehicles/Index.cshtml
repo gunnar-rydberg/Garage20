@@ -21,15 +21,17 @@
 
                     @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info pull-right" })
                 </div>
-</p>
-        </div>
-        <div class="panel-body">
-            <div id="extended-search-panel" class="collapse">
+            </p>
+            <div id="extended-search-panel" class="form-inline collapse">
                 <p>
-                    Brand: @Html.TextBox("searchBrand")
-                    Model: @Html.TextBox("searchModel")
+                    Brand: @Html.TextBox("searchBrand", null, new { @class = "form-control" })
+                    Model: @Html.TextBox("searchModel", null, new { @class = "form-control" })
                 </p>
             </div>
+
+        </div>
+        <div class="panel-body">
+
 
         <table class="table" id="tblVehicles">
             <tr>
@@ -71,7 +73,8 @@
                         @Html.DisplayFor(modelItem => item.RegNo)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Color)
+                        @*@Html.DisplayFor(modelItem => item.Color)*@
+                        <div style="width: 40px; height: 20px; border: 1px solid black; background-color: @item.Color;"></div>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem =>item.ParkingTime)
@@ -96,9 +99,9 @@
                 </tr>
             }
 
-        </table>
+            </table>
 
+        </div>
     </div>
-</div>
 }
 <script src="~/Scripts/garage.js"></script>
