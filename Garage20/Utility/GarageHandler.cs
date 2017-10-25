@@ -37,18 +37,28 @@ namespace Garage20.Utility
         /// <param name="vehicle"></param>
         public void Park(Vehicle vehicle)
         {
-            ParkingLot parkingSpace;
-            if (vehicle.Type == VehicleType.Motorcycle)
-            {
-                parkingSpace = findFreeSubParkingSpace() ?? findFreeParkingSpace();
-            }
-            else
-            {
-                parkingSpace = findFreeParkingSpace();
-            }
-
             vehicle.ParkingLots = new List<ParkingLot>();
-            vehicle.ParkingLots.Add(parkingSpace);
+
+            switch (vehicle.Type)
+            {
+                case VehicleType.Motorcycle:
+                    {
+                        vehicle.ParkingLots.Add(findFreeSubParkingSpace() ?? findFreeParkingSpace());
+                        break;
+                    }
+                case VehicleType.Trucks:
+                    {
+                        var parkingSpaces = findFreeParkingSpace(3);
+                        //TODO validate parking space 
+                        parkingSpaces.ForEach(vehicle.ParkingLots.Add);
+                        break;
+                    }
+                default:
+                    {
+                        vehicle.ParkingLots.Add(findFreeParkingSpace());
+                        break;
+                    }
+            }
 
             db.Vehicles.Add(vehicle);
             db.SaveChanges();
@@ -84,7 +94,20 @@ namespace Garage20.Utility
                                               x.Vehicles.All(y => y.Type == VehicleType.Motorcycle))
                                   .FirstOrDefault();
         }
-        
+
+        private List<ParkingLot> findFreeParkingSpace(int size)
+        {
+            // finx {size} number of free spaces adjacent to each other
+            for (int i = 0; i < TotalCapacity; i++)
+            {
+                var q = db.ParkingLots.OrderBy(x => x.Id)
+                                      .Skip(i)
+                                      .Take(size);
+                if (q.All(x => !x.Vehicles.Any()))
+                    return q.ToList();
+            }
+            return null; //TODO Some error handling
+        }
 
 
     }
