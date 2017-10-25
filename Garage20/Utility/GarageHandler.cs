@@ -9,27 +9,15 @@ namespace Garage20.Utility
 {
     public class GarageHandler
     {
-        private Garage20Context db; // = new Garage20Context();
+        private Garage20Context db;
 
         public GarageHandler(Garage20Context dbContext)
         {
             db = dbContext;
         }
 
-        public int FreeCapacity
-        {
-            get
-            {
-                return TotalCapacity - db.ParkingLots.Where(x => x.Vehicles.Any()).Count();
-            }
-        }
-        public int TotalCapacity
-        {
-            get
-            {
-                return db.ParkingLots.Count();
-            }
-        }
+        public int FreeCapacity => TotalCapacity - db.ParkingLots.Where(x => x.Vehicles.Any()).Count();
+        public int TotalCapacity => db.ParkingLots.Count();
 
         /// <summary>
         /// Park vehicle in garage
@@ -42,28 +30,6 @@ namespace Garage20.Utility
             var parkingLots = findFreeParkingSpace(vehicleParkingSize(vehicle.Type));
             parkingLots.ForEach(vehicle.ParkingLots.Add);
 
-            /*
-            switch (vehicle.Type)
-            {
-                case VehicleType.Motorcycle:
-                    {
-                        vehicle.ParkingLots.Add(findFreeSubParkingSpace() ?? findFreeParkingSpace());
-                        break;
-                    }
-                case VehicleType.Trucks:
-                    {
-                        var parkingSpaces = findFreeParkingSpace(3);
-                        //TODO validate parking space 
-                        parkingSpaces.ForEach(vehicle.ParkingLots.Add);
-                        break;
-                    }
-                default:
-                    {
-                        vehicle.ParkingLots.Add(findFreeParkingSpace());
-                        break;
-                    }
-            }
-            */
             db.Vehicles.Add(vehicle);
             db.SaveChanges();
         }
@@ -93,16 +59,19 @@ namespace Garage20.Utility
 
             if(size == 1m)
             {
-                parkingLots.Add(findFreeParkingSpace());
+                var parkingLot = findFreeParkingSpace();
+                if(parkingLot != null)
+                    parkingLots.Add(parkingLot);
+            }
+            else if (size < 1m)
+            {
+                var parkingLot = findFreeParkingSubSpace(size) ?? findFreeParkingSpace();
+                if (parkingLot != null)
+                    parkingLots.Add(parkingLot);
             }
             else if (size > 1m)
             {
                 parkingLots.AddRange(findFreeParkingSpaceMultiple((int)Decimal.Ceiling(size)));
-            }
-            else if (size < 1m)
-            {
-                parkingLots.Add(
-                    findFreeParkingSubSpace(size) ?? findFreeParkingSpace() );
             }
             return parkingLots;
         }
