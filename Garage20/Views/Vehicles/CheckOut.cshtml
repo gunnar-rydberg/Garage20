@@ -4,9 +4,7 @@
     ViewBag.Title = "Check OUt";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to Check OUt?</h3>
+<h3>Are you sure you want to Check Out?</h3>
 <div>
    
     <hr />
@@ -32,7 +30,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Color)
+            <div style="width: 40px; height: 20px; border: 1px solid black; background-color: @Model.Color;"></div>
         </dd>
 
         <dt>

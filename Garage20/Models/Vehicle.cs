@@ -15,7 +15,6 @@ namespace Garage20.Models
         [Display(Name = "Reg.No")]
         [Required]
         public string RegNo { get; set; }
-        [Required]
         public string Color { get; set; }
         [RegularExpression("^[0-9]*$", ErrorMessage = "Please write number")]
         public int NoWheels { get; set; }
