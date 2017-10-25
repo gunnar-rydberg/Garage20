@@ -295,6 +295,7 @@
     <Content Include="Views\Vehicles\CheckOut.cshtml" />
     <Content Include="Views\Vehicles\Park.cshtml" />
     <Content Include="Views\Vehicles\Receipt.cshtml" />
+    <Content Include="Views\Vehicles\Garage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

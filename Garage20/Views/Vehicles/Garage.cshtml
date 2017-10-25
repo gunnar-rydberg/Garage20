@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Garage20.Models.ParkingLot>
+
+@{
+    ViewBag.Title = "Parking Lot";
+}
+
+<h2>Parking Lot</h2>
+
+
+            @*@Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Vehicles)*@
+
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+    <div class="col-xs-6 col-sm-3 col-md-2">
+        <a href="#" class="btn btn-default">
+            <p>@Html.DisplayFor(modelItem => item.Description)</p>
+            <p>@String.Join(" ", item.Vehicles.Select(x => x.RegNo))</p>
+        </a>
+    </div>
+    }
+</div>

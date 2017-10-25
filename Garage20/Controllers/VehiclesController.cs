@@ -24,6 +24,11 @@ namespace Garage20.Controllers
             garage = new GarageHandler(db); //TODO Read up on dependency injection
         }
 
+        public ActionResult Garage()
+        {
+            return View(db.ParkingLots);
+        }
+
         // GET: Vehicles
         public ActionResult Index(string search = "", string searchBrand = "", string searchModel = "")
         {
