@@ -45,17 +45,14 @@ namespace Garage20.Controllers
                     Color = item.Color,
                     Type = item.Type,
                     RegNo = item.RegNo,
-                    ParkingTime = DateTime.Now - item.Date
-
+                    ParkingTime = DateTime.Now - item.Date,
+                    ParkingSpace = String.Join(" ", item.ParkingLots.Select(x => x.Description))
                 });
             }
 
             ViewBag.FreeCapacity = garage.FreeCapacity; //DEBUG: remove in merge?
+
             return View(vec);
-
-            
-
-
         }
 
         // GET: Vehicles/Details/5
