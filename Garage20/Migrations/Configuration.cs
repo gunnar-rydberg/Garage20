@@ -1,6 +1,7 @@
 namespace Garage20.Migrations
 {
     using System;
+    using System.Collections.Generic;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
@@ -15,6 +16,20 @@ namespace Garage20.Migrations
 
         protected override void Seed(Garage20.Models.Garage20Context context)
         {
+            const int GARAGE_SIZE = 20;
+
+            for (int i = 1; i <= GARAGE_SIZE; i++)
+            {
+                context.ParkingLots.AddOrUpdate(
+                    x => x.Id,
+                    new Models.ParkingLot()
+                    {
+                        Id = i,
+                        Description = $"Parking {i}",
+                        Vehicles = new List<Models.Vehicle>()
+                    });
+            }
+            context.SaveChanges();
 
             context.Vehicles.AddOrUpdate(
                 x => x.Id,
@@ -27,7 +42,7 @@ namespace Garage20.Migrations
                     Model = "9000",
                     Color = "Silver",
                     NoWheels = 4,
-                    Date = new DateTime(2000, 12, 16)
+                    Date = new DateTime(2000, 12, 16),                    
                 },
                 new Models.Vehicle()
                 {
@@ -62,8 +77,17 @@ namespace Garage20.Migrations
                     NoWheels = 2,
                     Date = new DateTime(2017, 10, 23)
                 }
+            );
+            context.SaveChanges();
 
-     );
+            //Assign vehicle to parking space
+
+            for (int i = 1; i <= 4; i++)
+            {
+                context.Vehicles.Single(x => x.Id == i)
+                       .ParkingLots.Add(context.ParkingLots.Single(x => x.Id == i));
+            }
+
         }
     }
 }

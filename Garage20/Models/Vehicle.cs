@@ -23,6 +23,6 @@ namespace Garage20.Models
         public string Brand { get; set; }
         public DateTime Date { get; set; }
                                           
-
+        public virtual ICollection<ParkingLot> ParkingLots { get; set; }
     }
 }
