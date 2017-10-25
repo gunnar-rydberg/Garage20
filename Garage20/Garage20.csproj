@@ -246,8 +246,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\military.svg" />
     <Content Include="Images\proposed.svg" />
-    <Content Include="Images\military.png" />
+    <Content Include="Images\rickshaws.svg" />
+    <Content Include="Images\UFO.svg" />
     <Content Include="Scripts\ai.0.22.9-build00167.js" />
     <Content Include="Scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="Scripts\bootstrap.js" />
