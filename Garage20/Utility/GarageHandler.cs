@@ -37,7 +37,16 @@ namespace Garage20.Utility
         /// <param name="vehicle"></param>
         public void Park(Vehicle vehicle)
         {
-            var parkingSpace = findFreeParkingSpace();
+            ParkingLot parkingSpace;
+            if (vehicle.Type == VehicleType.Motorcycle)
+            {
+                parkingSpace = findFreeSubParkingSpace() ?? findFreeParkingSpace();
+            }
+            else
+            {
+                parkingSpace = findFreeParkingSpace();
+            }
+
             vehicle.ParkingLots = new List<ParkingLot>();
             vehicle.ParkingLots.Add(parkingSpace);
 
@@ -52,7 +61,7 @@ namespace Garage20.Utility
         public void CheckOut(Vehicle vehicle)
         {
             //Remove from parking space
-            foreach(var parkingSpace in vehicle.ParkingLots)
+            foreach (var parkingSpace in vehicle.ParkingLots)
             {
                 //var vehicleToCheckOut = parkingSpace.Vehicles.First(x => x.Id == vehicle.Id);
                 //parkingSpace.Vehicles.Remove(vehicleToCheckOut);
@@ -69,6 +78,14 @@ namespace Garage20.Utility
             return db.ParkingLots.Where(x => !x.Vehicles.Any()).First();
             //TODO throw exception if nothing is found... or other solution
         }
+        private ParkingLot findFreeSubParkingSpace()
+        {
+            return db.ParkingLots.Where(x => x.Vehicles.Count < 3 &&
+                                              x.Vehicles.All(y => y.Type == VehicleType.Motorcycle))
+                                  .FirstOrDefault();
+        }
+        
+
 
     }
 }
