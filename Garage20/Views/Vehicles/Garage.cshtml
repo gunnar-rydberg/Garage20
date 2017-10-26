@@ -15,7 +15,7 @@
     @foreach (var item in Model)
     {
     <div class="col-xs-6 col-sm-3 col-md-2">
-        <a href="#" class="btn btn-default">
+        <a href="#" class="btn btn-default display-flex">
             <p>@Html.DisplayFor(modelItem => item.Description)</p>
             <p>@String.Join(" ", item.Vehicles.Select(x => x.RegNo))</p>
         </a>

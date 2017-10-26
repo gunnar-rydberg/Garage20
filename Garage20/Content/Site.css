@@ -35,3 +35,8 @@ textarea {
     cursor: pointer;
     color: darkorange;
 }
+
+.display-flex {
+    display: flex;
+    flex-wrap: wrap;
+}
