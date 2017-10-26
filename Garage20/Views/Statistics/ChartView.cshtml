@@ -1,0 +1,11 @@
+﻿@model Garage20.Models.Statistics
+
+@{
+    var typesChart = new Chart(width: 600, height: 400)
+        .AddTitle("Chart Title")
+        .AddSeries(
+            name: "Types",
+            xValue: @Model.Types.Keys, // Model.Types.Keys.ToList(),
+        yValues: @Model.Types.Values)
+        .Write(); // "PNG"
+}

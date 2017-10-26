@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Garage20.Utility;
+using System.Web.Helpers;
 
 namespace Garage20.Controllers
 {
@@ -28,7 +29,6 @@ namespace Garage20.Controllers
                 stats.Time += now - d;
             }
 
-
             var vehicleTypes = db.Vehicles.Select(v => v.Type).Distinct();
 
             foreach (var t in vehicleTypes)
@@ -37,11 +37,60 @@ namespace Garage20.Controllers
                 stats.Types.Add(t.ToString(), n);
             }
 
-
             stats.Price = (int)Math.Ceiling(stats.Time.TotalHours) * CalculatPrice.HOURLY_PRICE;
-
 
             return View(stats);
         }
+
+    //    public ActionResult ChartView()
+    //    {
+    //        Statistics stats = new Statistics();
+
+    //        var vehicleTypes = db.Vehicles.Select(v => v.Type).Distinct();
+
+    //        foreach (var t in vehicleTypes)
+    //        {
+    //            int n = db.Vehicles.Count(v => v.Type == t);
+    //            stats.Types.Add(t.ToString(), n);
+    //        }
+
+    //        return View(stats);
+    //    }
+
+    //    public ActionResult Chart()
+    //    {
+    //        var vehicleTypes = db.Vehicles.Select(v => v.Type).Distinct();
+    //        List<int> counts = new List<int>();
+
+    //        foreach (var t in vehicleTypes)
+    //        {
+    //            int n = db.Vehicles.Count(v => v.Type == t);
+    //            counts.Add(n);
+    //        }
+
+    //        var chart = new Chart(width: 600, height: 400)
+    //            .AddTitle("Chart Title")
+    //            .AddSeries(
+    //                name: "Types",
+    //                xValue: vehicleTypes.ToArray(),
+    //                yValues: counts.ToArray())
+    //            .GetBytes("png");
+    //            //.Write();
+
+    //        return File(chart, "image/bytes");
+    //    }
+
+
+    //    public ActionResult CreateCountryGDPPie()
+    //    {
+    //        var chart = new Chart(width: 300, height: 200, theme: ChartTheme.Vanilla)
+    //        .AddTitle("GDP Current Prices in Billion($)")
+    //        .AddLegend()
+    //        .AddSeries(chartType: "pie",
+    //                    xValue: new[] { "USA", "China", "Japan", "Germany", "UK", "France", "India"},
+    //                    yValues: new[] { "17968", "11385", "4116", "3371", "2865", "2423", "2183" })
+    //        .GetBytes("png");
+    //        return File(chart, "image/bytes");
+    //    }
     }
 }
