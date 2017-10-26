@@ -20,14 +20,17 @@ namespace Garage20.Migrations
 
             for (int i = 1; i <= GARAGE_SIZE; i++)
             {
-                context.ParkingLots.AddOrUpdate(
-                    x => x.Id,
-                    new Models.ParkingLot()
-                    {
-                        Id = i,
-                        Description = $"Parking {i}",
-                        Vehicles = new List<Models.Vehicle>()
-                    });
+                if (!context.ParkingLots.Any(x => x.Id == i))
+                {
+                    context.ParkingLots.AddOrUpdate(
+                        x => x.Id,
+                        new Models.ParkingLot()
+                        {
+                            Id = i,
+                            Description = $"Parking {i}",
+                            Vehicles = new List<Models.Vehicle>()
+                        });
+                }
             }
             context.SaveChanges();
 
@@ -42,7 +45,7 @@ namespace Garage20.Migrations
                     Model = "9000",
                     Color = "Silver",
                     NoWheels = 4,
-                    Date = new DateTime(2000, 12, 16),                    
+                    Date = new DateTime(2000, 12, 16),
                 },
                 new Models.Vehicle()
                 {
