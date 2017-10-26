@@ -3,7 +3,7 @@ namespace Garage20.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class add_parkinglots : DbMigration
+    public partial class Initial : DbMigration
     {
         public override void Up()
         {
@@ -13,6 +13,21 @@ namespace Garage20.Migrations
                     {
                         Id = c.Int(nullable: false, identity: true),
                         Description = c.String(maxLength: 50),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Vehicles",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Type = c.Int(nullable: false),
+                        RegNo = c.String(nullable: false),
+                        Color = c.String(),
+                        NoWheels = c.Int(nullable: false),
+                        Model = c.String(),
+                        Brand = c.String(),
+                        Date = c.DateTime(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -38,6 +53,7 @@ namespace Garage20.Migrations
             DropIndex("dbo.VehicleParkingLots", new[] { "ParkingLot_Id" });
             DropIndex("dbo.VehicleParkingLots", new[] { "Vehicle_Id" });
             DropTable("dbo.VehicleParkingLots");
+            DropTable("dbo.Vehicles");
             DropTable("dbo.ParkingLots");
         }
     }

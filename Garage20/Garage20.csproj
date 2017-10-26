@@ -177,13 +177,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201710230823599_InitialCreate.cs" />
-    <Compile Include="Migrations\201710230823599_InitialCreate.Designer.cs">
-      <DependentUpon>201710230823599_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201710250958564_add_parkinglots.cs" />
-    <Compile Include="Migrations\201710250958564_add_parkinglots.Designer.cs">
-      <DependentUpon>201710250958564_add_parkinglots.cs</DependentUpon>
+    <Compile Include="Migrations\201710261047037_Initial.cs" />
+    <Compile Include="Migrations\201710261047037_Initial.Designer.cs">
+      <DependentUpon>201710261047037_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Garage20Context.cs" />
@@ -313,11 +309,8 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201710230823599_InitialCreate.resx">
-      <DependentUpon>201710230823599_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201710250958564_add_parkinglots.resx">
-      <DependentUpon>201710250958564_add_parkinglots.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201710261047037_Initial.resx">
+      <DependentUpon>201710261047037_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

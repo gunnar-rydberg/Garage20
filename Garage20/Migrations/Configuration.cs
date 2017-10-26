@@ -11,11 +11,22 @@ namespace Garage20.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            ContextKey = "Garage20Context";
         }
 
         protected override void Seed(Garage20.Models.Garage20Context context)
         {
+            //  This method will be called after migrating to the latest version.
+
+            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
+            //  to avoid creating duplicate seed data. E.g.
+            //
+            //    context.People.AddOrUpdate(
+            //      p => p.FullName,
+            //      new Person { FullName = "Andrew Peters" },
+            //      new Person { FullName = "Brice Lambson" },
+            //      new Person { FullName = "Rowan Miller" }
+            //    );
+            //
             const int GARAGE_SIZE = 20;
 
             for (int i = 1; i <= GARAGE_SIZE; i++)
@@ -90,7 +101,6 @@ namespace Garage20.Migrations
                 context.Vehicles.Single(x => x.Id == i)
                        .ParkingLots.Add(context.ParkingLots.Single(x => x.Id == i));
             }
-
         }
     }
 }
