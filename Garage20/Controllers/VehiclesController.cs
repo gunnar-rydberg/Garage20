@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Garage20.Models;
+using Garage20.Utility;
 
 namespace Garage20.Controllers
 {
@@ -152,9 +153,13 @@ namespace Garage20.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
+
+            var receipt = ParkingLogic.CreateReceipt(vehicle);
+
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return View("Receipt", receipt);
         }
 
         protected override void Dispose(bool disposing)

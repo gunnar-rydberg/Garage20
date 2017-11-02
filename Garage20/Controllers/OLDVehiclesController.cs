@@ -141,7 +141,7 @@ namespace Garage20.OLDControllers
         {
             Vehicle vehicle = db.Vehicles.Find(id);
 
-            var receipt = CalculatPrice.Calculator(vehicle);
+            var receipt = ParkingLogic.CreateReceipt(vehicle);
 
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();

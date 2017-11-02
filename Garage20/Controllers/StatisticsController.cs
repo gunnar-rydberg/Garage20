@@ -37,7 +37,7 @@ namespace Garage20.Controllers
                 stats.Types.Add(t.ToString(), n);
             }
 
-            stats.Price = (int)Math.Ceiling(stats.Time.TotalHours) * CalculatPrice.HOURLY_PRICE;
+            stats.Price = (int)Math.Ceiling(stats.Time.TotalHours) * ParkingLogic.HOURLY_PRICE_PER_PARKING_LOT;
 
             return View(stats);
         }

@@ -315,6 +315,7 @@
     <Content Include="Views\Members\Edit.cshtml" />
     <Content Include="Views\Members\Index.cshtml" />
     <Content Include="Views\Vehicles\IndexDetailed.cshtml" />
+    <Content Include="Views\Vehicles\Receipt.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
