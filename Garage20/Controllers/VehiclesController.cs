@@ -7,47 +7,52 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Garage20.Models;
-using Garage20.Utility;
 
 namespace Garage20.Controllers
 {
     public class VehiclesController : Controller
     {
-
-
         private Garage20Context db = new Garage20Context();
 
-        // GET: Vehicles
-        public ActionResult Index(string search = "", string searchBrand = "", string searchModel = "")
+        // GET: NEWVehicles
+        public ActionResult Index(string regNo = "", int VehicleTypeId = 0, bool Detailed = false)
         {
-            var query = Enumerable.Empty<Vehicle>().AsQueryable();
-            query = db.Vehicles;
-            if (search != "")
-                query = db.Vehicles.Where(x => x.RegNo.Contains(search));
-            if (searchBrand != "")
-                query = query.Where(x => x.Brand.Contains(searchBrand));
-            if (searchModel != "")
-                query = query.Where(x => x.Model.Contains(searchModel));
 
-            var vec = new List<ListViewModel>();
-            foreach (var item in query)
-            {
-                vec.Add(new ListViewModel()
-                {
-                    Id = item.Id,
-                    Color = item.Color,
-                    Type = item.Type,
-                    RegNo = item.RegNo,
-                    ParkingTime = DateTime.Now - item.Date
+            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
+            vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
+            ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
 
-                });
-            }
 
-            return View(vec);
+            var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+            if (regNo != "")
+                vehicles = vehicles.Where(x => x.RegNo == regNo);
+            if (VehicleTypeId != 0)
+                vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
+
+            if(Detailed)
+                return View("IndexDetailed",vehicles.ToList());
+            else
+                return View("Index", vehicles.ToList());
 
         }
 
-        // GET: Vehicles/Details/5
+        //public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
+        //{
+        //    var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
+        //    vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
+        //    ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
+
+
+        //    var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+        //    if (regNo != "")
+        //        vehicles = vehicles.Where(x => x.RegNo == regNo);
+        //    if (VehicleTypeId != 0)
+        //        vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
+
+        //    return View(vehicles.ToList());
+        //}
+
+        // GET: NEWVehicles/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -62,31 +67,34 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // GET: Vehicles/Create
-        public ActionResult Park()
+        // GET: NEWVehicles/Create
+        public ActionResult Create()
         {
+            ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
             return View();
         }
 
-        // POST: Vehicles/Create
+        // POST: NEWVehicles/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Park([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
-                vehicle.Date = DateTime.Now;
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
+            ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName", vehicle.MemberId);
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name", vehicle.VehicleTypeId);
             return View(vehicle);
         }
 
-        // GET: Vehicles/Edit/5
+        // GET: NEWVehicles/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -98,17 +106,17 @@ namespace Garage20.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName", vehicle.MemberId);
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name", vehicle.VehicleTypeId);
             return View(vehicle);
         }
 
-
-
-        // POST: Vehicles/Edit/5
+        // POST: NEWVehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -116,11 +124,13 @@ namespace Garage20.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName", vehicle.MemberId);
+            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name", vehicle.VehicleTypeId);
             return View(vehicle);
         }
 
-        // GET: Vehicles/Delete/5
-        public ActionResult CheckOut(int? id)
+        // GET: NEWVehicles/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
@@ -134,22 +144,16 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // POST: Vehicles/Delete/5
-        [HttpPost, ActionName("CheckOut")]
+        // POST: NEWVehicles/Delete/5
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult CheckOutConfirmed(int id)
+        public ActionResult DeleteConfirmed(int id)
         {
             Vehicle vehicle = db.Vehicles.Find(id);
-
-            var receipt = CalculatPrice.Calculator(vehicle);
-
             db.Vehicles.Remove(vehicle);
             db.SaveChanges();
-
-            return View("Receipt", receipt);
-
+            return RedirectToAction("Index");
         }
-
 
         protected override void Dispose(bool disposing)
         {
@@ -159,73 +163,5 @@ namespace Garage20.Controllers
             }
             base.Dispose(disposing);
         }
-
-
-        //public ActionResult Sort(string sortOrder, string column)
-        //{
-        //    var vehicles = new List<Vehicle>();
-        //    //var vehicles = db.Vehicles.ToList().ToList();
-
-        //    if (sortOrder == null || sortOrder == "desc")
-        //    {
-        //        switch (column)
-        //        {
-        //            case "type":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Type).ToList();
-        //                break;
-        //            case "regno":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.RegNo).ToList();
-        //                break;
-        //            case "color":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Color).ToList();
-        //                break;
-        //            case "nowheels":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.NoWheels).ToList();
-        //                break;
-        //            case "model":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Model).ToList();
-        //                break;
-        //            case "brand":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Brand).ToList();
-        //                break;
-        //            case "date":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Date).ToList();
-        //                break;
-        //        }
-        //        ViewBag.SortTypeOrder = "asc";
-        //     //   ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet";
-        //    }
-        //    else
-        //    {
-        //        switch (column)
-        //        {
-        //            case "type":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Type).ToList();
-        //                break;
-        //            case "regno":
-        //                vehicles = db.Vehicles.OrderBy(e => e.RegNo).ToList();
-        //                break;
-        //            case "color":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Color).ToList();
-        //                break;
-        //            case "nowheels":
-        //                vehicles = db.Vehicles.OrderBy(e => e.NoWheels).ToList();
-        //                break;
-        //            case "model":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Model).ToList();
-        //                break;
-        //            case "brand":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Brand).ToList();
-        //                break;
-        //            case "date":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Date).ToList();
-        //                break;
-        //        }
-        //        ViewBag.SortTypeOrder = "desc";
-        //    //    ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet-alt";
-        //    }
-
-        //    return View("Index", vehicles);
-        //}
     }
 }
