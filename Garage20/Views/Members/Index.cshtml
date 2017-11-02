@@ -4,11 +4,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+@using (Html.BeginForm("Index", "Members", FormMethod.Get))
+{
+            <p>
+                <div class="form-inline">
+                    First Name: @Html.TextBox("FirstName", null, new { @class = "form-control" })
+                    Last Name: @Html.TextBox("LastName", null, new { @class = "form-control" })
+                    <div class="btn-group">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </div>
+                    @Html.ActionLink("Add Member", "Create", null, new { @class = "btn btn-info pull-right" })
+                </div>
+            </p>
+}
+        </div>
+        <div class="panel-body">
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+
 <table class="table" id="tblVehicles">
     <tr>
         <th onclick="sortTable(0)">
@@ -49,5 +63,7 @@
 }
 
 </table>
+        </div>
+    </div>
 
 <script src="~/Scripts/garage.js"></script>
