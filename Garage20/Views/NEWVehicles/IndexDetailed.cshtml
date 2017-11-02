@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Garage20.Models.Vehicle>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "IndexDetailed";
 }
 
-<h2>Index</h2>
+<h2>IndexDetailed</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -16,10 +16,22 @@
             Owner
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.VehicleType.Name)
+            @Html.DisplayNameFor(model => model.Type)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.RegNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Color)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoWheels)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Brand)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Date)
@@ -31,13 +43,26 @@
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Member.FirstName)
-            @Html.DisplayFor(modelItem => item.Member.LastName)
+            @Html.DisplayFor(modelItem => item.VehicleType.Name)
+            <!-- TODO Link to member ??? -->
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.VehicleType.Name)
+            @Html.DisplayFor(modelItem => item.Type)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RegNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Color)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoWheels)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Brand)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Date)

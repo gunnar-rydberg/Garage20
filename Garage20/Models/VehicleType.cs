@@ -11,6 +11,7 @@ namespace Garage20.Models
         public int Id { get; set; }
         [MaxLength(100)]
         [Required]
+        [Display(Name = "Type")]
         public string Name { get; set; }
         [Required]
         public decimal NumberOfParkingLots { get; set; }

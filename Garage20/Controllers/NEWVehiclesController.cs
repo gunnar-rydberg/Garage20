@@ -21,6 +21,12 @@ namespace Garage20.Controllers
             return View(vehicles.ToList());
         }
 
+        public ActionResult IndexDetailed()
+        {
+            var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+            return View(vehicles.ToList());
+        }
+
         // GET: NEWVehicles/Details/5
         public ActionResult Details(int? id)
         {
