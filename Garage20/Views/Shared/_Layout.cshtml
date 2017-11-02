@@ -20,7 +20,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Register", "Index", "Vehicles")</li>
+                    <li>@Html.ActionLink("Garage", "Index", "Vehicles")</li>
+                    <li>@Html.ActionLink("Details", "Index", "Vehicles", new { Detailed = true }, null)</li>
+                    <li>@Html.ActionLink("Members", "Index", "Members")</li>
                     <li>@Html.ActionLink("Statistics", "Index", "Statistics")</li>
                 </ul>
             </div>

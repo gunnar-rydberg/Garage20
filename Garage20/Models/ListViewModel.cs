@@ -8,15 +8,10 @@ namespace Garage20.Models
 {
     public class ListViewModel
     {
+        public Vehicle vehicle { get; set; }
 
-        public int Id { get; set;  }
-        public VehicleType Type { get; set; }
-        public string RegNo { get; set; }
-        public string Color { get; set; }
-        public DateTime Date { get; set; }
-       
         [Display(Name = "Parking Time Length")]
-        [DisplayFormat(DataFormatString = "{0:hh\\:mm\\:ss}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:%d} day(s) {0:hh} hour(s)", ApplyFormatInEditMode = true)]
         public TimeSpan ParkingTime{ get; set; }
     }
 }
