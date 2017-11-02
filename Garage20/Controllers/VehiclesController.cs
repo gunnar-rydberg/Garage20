@@ -87,7 +87,7 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -125,7 +125,7 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Edit([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,Date,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {

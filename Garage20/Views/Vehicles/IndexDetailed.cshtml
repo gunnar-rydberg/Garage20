@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Garage20.Models.Vehicle>
+﻿@model IEnumerable<Garage20.Models.ListViewModel>
 
 @{
     ViewBag.Title = "IndexDetailed";
@@ -48,25 +48,28 @@
             Owner
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @Html.DisplayNameFor(model => model.vehicle.VehicleType.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.RegNo)
+            @Html.DisplayNameFor(model => model.vehicle.RegNo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Color)
+            @Html.DisplayNameFor(model => model.vehicle.Color)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NoWheels)
+            @Html.DisplayNameFor(model => model.vehicle.NoWheels)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Model)
+            @Html.DisplayNameFor(model => model.vehicle.Model)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Brand)
+            @Html.DisplayNameFor(model => model.vehicle.Brand)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Date)
+            @Html.DisplayNameFor(model => model.vehicle.Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ParkingTime)
         </th>
         <th></th>
     </tr>
@@ -74,35 +77,38 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Member.FirstName)
-            @Html.DisplayFor(modelItem => item.VehicleType.Name)
+            @Html.DisplayFor(modelItem => item.vehicle.Member.FirstName)
+            @Html.DisplayFor(modelItem => item.vehicle.VehicleType.Name)
             <!-- TODO Link to member ??? -->
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Type)
+            @Html.DisplayFor(modelItem => item.vehicle.VehicleType.Name)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.RegNo)
+            @Html.DisplayFor(modelItem => item.vehicle.RegNo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Color)
+            @Html.DisplayFor(modelItem => item.vehicle.Color)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NoWheels)
+            @Html.DisplayFor(modelItem => item.vehicle.NoWheels)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Model)
+            @Html.DisplayFor(modelItem => item.vehicle.Model)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Brand)
+            @Html.DisplayFor(modelItem => item.vehicle.Brand)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Date)
+            @Html.DisplayFor(modelItem => item.vehicle.Date)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.ParkingTime)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.vehicle.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.vehicle.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.vehicle.Id })
         </td>
     </tr>
 }
