@@ -6,6 +6,38 @@
 
 <h2>IndexDetailed</h2>
 
+@using (Html.BeginForm("Index", "NEWVehicles", FormMethod.Get))
+{
+    @Html.Hidden("Detailed", true)
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <p>
+                <div class="form-inline">
+                    Reg.no: @Html.TextBox("regNo", null, new { @class = "form-control" })
+                    Type: @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control" })
+                    <div class="btn-group">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <!-- NOTE! you cannot use button tag because it will post the form -->
+                        <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
+                    </div>
+
+                    @Html.ActionLink("Park Vehicle", "Create", null, new { @class = "btn btn-info pull-right" })
+                </div>
+            </p>
+            <div id="extended-search-panel" class="form-inline collapse">
+                <p>
+                    @*Brand: @Html.TextBox("searchBrand", null, new { @class = "form-control" })
+                        Model: @Html.TextBox("searchModel", null, new { @class = "form-control" })*@
+                </p>
+            </div>
+
+        </div>
+        <div class="panel-body">
+        </div>
+    </div>
+}
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>

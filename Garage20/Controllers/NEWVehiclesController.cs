@@ -15,17 +15,42 @@ namespace Garage20.Controllers
         private Garage20Context db = new Garage20Context();
 
         // GET: NEWVehicles
-        public ActionResult Index()
+        public ActionResult Index(string regNo = "", int VehicleTypeId = 0, bool Detailed = false)
         {
+
+            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
+            vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
+            ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
+
+
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
-            return View(vehicles.ToList());
+            if (regNo != "")
+                vehicles = vehicles.Where(x => x.RegNo == regNo);
+            if (VehicleTypeId != 0)
+                vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
+
+            if(Detailed)
+                return View("IndexDetailed",vehicles.ToList());
+            else
+                return View("Index", vehicles.ToList());
+
         }
 
-        public ActionResult IndexDetailed()
-        {
-            var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
-            return View(vehicles.ToList());
-        }
+        //public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
+        //{
+        //    var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
+        //    vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
+        //    ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
+
+
+        //    var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
+        //    if (regNo != "")
+        //        vehicles = vehicles.Where(x => x.RegNo == regNo);
+        //    if (VehicleTypeId != 0)
+        //        vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
+
+        //    return View(vehicles.ToList());
+        //}
 
         // GET: NEWVehicles/Details/5
         public ActionResult Details(int? id)

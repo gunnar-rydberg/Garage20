@@ -9,18 +9,18 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
+<table class="table" id="tblVehicles">
     <tr>
-        <th>
+        <th onclick="sortTable(0)">
             @Html.DisplayNameFor(model => model.FirstName)
         </th>
-        <th>
+        <th onclick="sortTable(1)">
             @Html.DisplayNameFor(model => model.LastName)
         </th>
-        <th>
+        <th onclick="sortTable(2)">
             @Html.DisplayNameFor(model => model.Telephone)
         </th>
-        <th>
+        <th onclick="sortTable(3)">
             @Html.DisplayNameFor(model => model.Mail)
         </th>
         <th></th>
@@ -49,3 +49,5 @@
 }
 
 </table>
+
+<script src="~/Scripts/garage.js"></script>
