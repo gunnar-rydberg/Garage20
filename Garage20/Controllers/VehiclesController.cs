@@ -30,10 +30,16 @@ namespace Garage20.Controllers
             if (VehicleTypeId != 0)
                 vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
 
-            if(Detailed)
-                return View("IndexDetailed",vehicles.ToList());
+            var vehicleList = new List<ListViewModel>();
+            foreach (var v in vehicles)
+                vehicleList.Add(new ListViewModel {
+                    vehicle = v,
+                    ParkingTime = DateTime.Now - v.Date, });
+            
+            if (Detailed)
+                return View("IndexDetailed",vehicleList);
             else
-                return View("Index", vehicles.ToList());
+                return View("Index", vehicleList);
 
         }
 

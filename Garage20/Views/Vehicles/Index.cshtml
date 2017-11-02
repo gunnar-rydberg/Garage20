@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Garage20.Models.Vehicle>
+﻿@model IEnumerable<Garage20.Models.ListViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -47,13 +47,13 @@
                         Owner
                     </th>
                     <th onclick="sortTable(1)">
-                        @Html.DisplayNameFor(model => model.VehicleType.Name)
+                        @Html.DisplayNameFor(model => model.vehicle.VehicleType.Name)
                     </th>
                     <th onclick="sortTable(2)">
-                        @Html.DisplayNameFor(model => model.RegNo)
+                        @Html.DisplayNameFor(model => model.vehicle.RegNo)
                     </th>
                     <th onclick="sortTable(3)">
-                        @Html.DisplayNameFor(model => model.Date)
+                        @Html.DisplayNameFor(model => model.ParkingTime)
                     </th>
                     <th></th>
                 </tr>
@@ -62,22 +62,22 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Member.FirstName)
-                            @Html.DisplayFor(modelItem => item.Member.LastName)
+                            @Html.DisplayFor(modelItem => item.vehicle.Member.FirstName)
+                            @Html.DisplayFor(modelItem => item.vehicle.Member.LastName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.VehicleType.Name)
+                            @Html.DisplayFor(modelItem => item.vehicle.VehicleType.Name)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.RegNo)
+                            @Html.DisplayFor(modelItem => item.vehicle.RegNo)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Date)
+                            @Html.DisplayFor(modelItem => item.ParkingTime)
                         </td>
                         <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                            @Html.ActionLink("Edit", "Edit", new { id = item.vehicle.Id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.vehicle.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.vehicle.Id })
                         </td>
                     </tr>
                 }

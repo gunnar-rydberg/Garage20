@@ -34,10 +34,6 @@ namespace Garage20.OLDControllers
             {
                 vec.Add(new ListViewModel()
                 {
-                    Id = item.Id,
-                    Color = item.Color,
-                    Type = item.Type,
-                    RegNo = item.RegNo,
                     ParkingTime = DateTime.Now - item.Date
 
                 });
