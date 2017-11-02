@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-public enum VehicleType
+public enum VehicleTypeEnum
 {
     Armoured = 0,
     Car = 1,
