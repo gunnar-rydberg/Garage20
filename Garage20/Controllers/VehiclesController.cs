@@ -80,10 +80,12 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,Date,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Create([Bind(Include = "Id,Type,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
+                vehicle.Date = DateTime.Now;
+
                 db.Vehicles.Add(vehicle);
                 db.SaveChanges();
                 return RedirectToAction("Index");
