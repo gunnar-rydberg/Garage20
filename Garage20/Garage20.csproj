@@ -173,6 +173,8 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\MembersController.cs" />
+    <Compile Include="Controllers\NEWVehiclesController.cs" />
     <Compile Include="Controllers\StatisticsController.cs" />
     <Compile Include="Controllers\VehiclesController.cs" />
     <Compile Include="Enum\VehicleTypes.cs" />
@@ -302,6 +304,16 @@
     <Content Include="Views\Vehicles\PDFView.cshtml" />
     <Content Include="Views\Statistics\Index.cshtml" />
     <Content Include="Views\Statistics\ChartView.cshtml" />
+    <Content Include="Views\NEWVehicles\Create.cshtml" />
+    <Content Include="Views\NEWVehicles\Delete.cshtml" />
+    <Content Include="Views\NEWVehicles\Details.cshtml" />
+    <Content Include="Views\NEWVehicles\Edit.cshtml" />
+    <Content Include="Views\NEWVehicles\Index.cshtml" />
+    <Content Include="Views\Members\Create.cshtml" />
+    <Content Include="Views\Members\Delete.cshtml" />
+    <Content Include="Views\Members\Details.cshtml" />
+    <Content Include="Views\Members\Edit.cshtml" />
+    <Content Include="Views\Members\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
