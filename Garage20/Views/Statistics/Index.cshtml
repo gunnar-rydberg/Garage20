@@ -7,8 +7,29 @@
 <div>
     <h4>Statistics</h4>
     <hr />
+    
+    <div class="panel panel-default">
+        <div class="panel-heading"><strong>@Html.DisplayNameFor(model => model.Types)</strong></div>
+        <div class="panel-body">
+
+            <div class="row">
+                @{ foreach (var t in Model.Types)
+                    {
+                        var imgFile = "/Images/" + t.Key + ".svg";
+                        <div class="col-sm-2">
+                            @t.Value&nbsp;<img src="@imgFile" alt="@t.Key" style="width: 10%;" /> @t.Key
+                        </div>
+                    }
+                }
+
+            </div>
+
+        </div>
+        <div class="panel-footer text-right">Total Vehicles: @Model.Types.Sum(v => v.Value)</div>
+    </div>
+
     <dl class="dl-horizontal">
-        <dt>
+        @*<dt>
             @Html.DisplayNameFor(model => model.Types)
         </dt>
         <dd>
@@ -27,7 +48,7 @@
                     }
                 </tr>
             </table>
-        </dd>
+        </dd>*@
 
         <dt>
             @Html.DisplayNameFor(model => model.Wheels)
@@ -54,6 +75,14 @@
 
     </dl>
 </div>
+
+
+
+
+
+
+
+
 
 <p>
     @Html.ActionLink("Back to List", "Index", "Vehicles", null, new { @class = "btn btn-default" })
