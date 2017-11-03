@@ -1,4 +1,18 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Func<string, string, string> getNavBarActiveStatus = (string action, string controller) =>
+    {
+        object thisController;
+        object thisAction;
+        ViewContext.RouteData.Values.TryGetValue("controller", out thisController);
+        ViewContext.RouteData.Values.TryGetValue("action", out thisAction);
+        if (thisAction.ToString() == action && thisController.ToString() == controller)
+            return "class = active";
+        else
+            return "";
+    };
+}
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -8,7 +22,7 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top garage-navbar">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -20,10 +34,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Garage", "Index", "Vehicles")</li>
-                    <li>@Html.ActionLink("Details", "Index", "Vehicles", new { Detailed = true }, null)</li>
-                    <li>@Html.ActionLink("Members", "Index", "Members")</li>
-                    <li>@Html.ActionLink("Statistics", "Index", "Statistics")</li>
+                    <li @getNavBarActiveStatus("Index","Vehicles") >@Html.ActionLink("Garage", "Index", "Vehicles")</li>
+                    <li @getNavBarActiveStatus("Index","Vehicles") >@Html.ActionLink("Details", "Index", "Vehicles", new { Detailed = true }, null)</li>
+                    <li @getNavBarActiveStatus("Index","Members") >@Html.ActionLink("Members", "Index", "Members")</li>
+                    <li @getNavBarActiveStatus("Index","Statistics") >@Html.ActionLink("Statistics", "Index", "Statistics")</li>
                 </ul>
             </div>
         </div>

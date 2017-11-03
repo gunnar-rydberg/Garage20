@@ -8,6 +8,9 @@ namespace Garage20.Models
 {
     public class Receipt
     {
+        [Display(Name = "Vehicle owner")]
+        public string memberName { get; set; }
+
         [Display(Name = "Checkout Time")]
         public DateTime CheckoutTimestamp { get; set; }
         public Vehicle Vehicle { get; set; }

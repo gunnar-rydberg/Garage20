@@ -21,7 +21,7 @@ namespace Garage20.Models
         public string Color { get; set; }
        
         [Range(0, 500, ErrorMessage = "Insert positive integers")]
-        [Display(Name = "# of Wheels")]
+        [Display(Name ="No. of wheels")]
         public int NoWheels { get; set; }
         public string Model { get; set; }
         public string Brand { get; set; }
