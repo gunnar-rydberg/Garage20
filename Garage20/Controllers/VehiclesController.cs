@@ -18,7 +18,6 @@ namespace Garage20.Controllers
         // GET: NEWVehicles
         public ActionResult Index(string regNo = "", int VehicleTypeId = 0, bool Detailed = false)
         {
-
             var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
             vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
             ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
@@ -75,7 +74,7 @@ namespace Garage20.Controllers
         }
 
         // GET: NEWVehicles/Create
-        public ActionResult Create()
+        public ActionResult Park()
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
             ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
@@ -87,7 +86,7 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
         {
             if (ModelState.IsValid)
             {
@@ -139,7 +138,7 @@ namespace Garage20.Controllers
         }
 
         // GET: NEWVehicles/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Checkout(int? id)
         {
             if (id == null)
             {
@@ -176,5 +175,73 @@ namespace Garage20.Controllers
             }
             base.Dispose(disposing);
         }
+
+
+        //public ActionResult Sort(string sortOrder, string column)
+        //{
+        //    var vehicles = new List<Vehicle>();
+        //    //var vehicles = db.Vehicles.ToList().ToList();
+
+        //    if (sortOrder == null || sortOrder == "desc")
+        //    {
+        //        switch (column)
+        //        {
+        //            case "type":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Type).ToList();
+        //                break;
+        //            case "regno":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.RegNo).ToList();
+        //                break;
+        //            case "color":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Color).ToList();
+        //                break;
+        //            case "nowheels":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.NoWheels).ToList();
+        //                break;
+        //            case "model":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Model).ToList();
+        //                break;
+        //            case "brand":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Brand).ToList();
+        //                break;
+        //            case "date":
+        //                vehicles = db.Vehicles.OrderByDescending(e => e.Date).ToList();
+        //                break;
+        //        }
+        //        ViewBag.SortTypeOrder = "asc";
+        //     //   ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet";
+        //    }
+        //    else
+        //    {
+        //        switch (column)
+        //        {
+        //            case "type":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Type).ToList();
+        //                break;
+        //            case "regno":
+        //                vehicles = db.Vehicles.OrderBy(e => e.RegNo).ToList();
+        //                break;
+        //            case "color":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Color).ToList();
+        //                break;
+        //            case "nowheels":
+        //                vehicles = db.Vehicles.OrderBy(e => e.NoWheels).ToList();
+        //                break;
+        //            case "model":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Model).ToList();
+        //                break;
+        //            case "brand":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Brand).ToList();
+        //                break;
+        //            case "date":
+        //                vehicles = db.Vehicles.OrderBy(e => e.Date).ToList();
+        //                break;
+        //        }
+        //        ViewBag.SortTypeOrder = "desc";
+        //    //    ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet-alt";
+        //    }
+
+        //    return View("Index", vehicles);
+        //}
     }
 }
