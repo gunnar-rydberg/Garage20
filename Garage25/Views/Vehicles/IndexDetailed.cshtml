@@ -4,7 +4,7 @@
     ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>List of Parked Vehicles</h2>
+<hr />
 
 @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
 {
@@ -106,7 +106,7 @@
             <div class="btn-group btn-group-xs">
                 @Html.ActionLink("Edit", "Edit", new { id = item.vehicle.Id }, new { @class = "btn btn-primary btn-xs" })
                 @Html.ActionLink("Details", "Details", new { id = item.vehicle.Id }, new { @class = "btn btn-primary btn-xs" })
-                @Html.ActionLink("Delete", "Delete", new { id = item.vehicle.Id }, new { @class = "btn btn-warning btn-xs" })
+                @Html.ActionLink("Checkout", "Checkout", new { id = item.vehicle.Id }, new { @class = "btn btn-warning btn-xs" })
             </div>
         </td>
     </tr>
