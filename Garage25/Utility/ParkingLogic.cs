@@ -15,6 +15,7 @@ namespace Garage20.Utility
         {
             var receipt = new Models.Receipt()
             {
+                memberName = vehicle.Member.FirstName + " " + vehicle.Member.LastName,
                 CheckoutTimestamp = DateTime.Now,
                 Vehicle = vehicle,
             };
