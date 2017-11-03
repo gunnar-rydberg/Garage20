@@ -25,7 +25,7 @@ namespace Garage20.Controllers
 
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
             if (regNo != "")
-                vehicles = vehicles.Where(x => x.RegNo == regNo);
+                vehicles = vehicles.Where(x => x.RegNo.Contains(regNo));
             if (VehicleTypeId != 0)
                 vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
 
@@ -42,21 +42,10 @@ namespace Garage20.Controllers
 
         }
 
-        //public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
-        //{
-        //    var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
-        //    vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
-        //    ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
-
-
-        //    var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
-        //    if (regNo != "")
-        //        vehicles = vehicles.Where(x => x.RegNo == regNo);
-        //    if (VehicleTypeId != 0)
-        //        vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
-
-        //    return View(vehicles.ToList());
-        //}
+        public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
+        {
+            return Index(regNo, VehicleTypeId, Detailed: true);
+        }
 
         // GET: NEWVehicles/Details/5
         public ActionResult Details(int? id)

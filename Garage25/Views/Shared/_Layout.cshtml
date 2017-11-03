@@ -35,7 +35,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li @getNavBarActiveStatus("Index","Vehicles") >@Html.ActionLink("Garage", "Index", "Vehicles")</li>
-                    <li @getNavBarActiveStatus("Index","Vehicles") >@Html.ActionLink("Details", "Index", "Vehicles", new { Detailed = true }, null)</li>
+                    <li @getNavBarActiveStatus("IndexDetailed", "Vehicles") >@Html.ActionLink("Details", "IndexDetailed", "Vehicles")</li>
                     <li @getNavBarActiveStatus("Index","Members") >@Html.ActionLink("Members", "Index", "Members")</li>
                     <li @getNavBarActiveStatus("Index","Statistics") >@Html.ActionLink("Statistics", "Index", "Statistics")</li>
                 </ul>
