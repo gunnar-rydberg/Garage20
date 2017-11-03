@@ -15,9 +15,15 @@ namespace Garage20.Controllers
         private Garage20Context db = new Garage20Context();
 
         // GET: Members
-        public ActionResult Index()
+        public ActionResult Index(string FirstName = "", string LastName = "")
         {
-            return View(db.Members.ToList());
+            var members = db.Members.AsQueryable();
+            if (FirstName != "")
+                members = members.Where(x => x.FirstName.Contains(FirstName));
+            if (LastName != "")
+                members = members.Where(x => x.LastName.Contains(LastName));
+
+            return View(members.ToList());
         }
 
         // GET: Members/Details/5
