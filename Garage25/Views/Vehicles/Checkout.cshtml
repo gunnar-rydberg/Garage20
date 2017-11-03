@@ -4,8 +4,6 @@
     ViewBag.Title = "Checkout";
 }
 
-<h2>Delete</h2>
-
 <h3>Are you sure you want to Checkout?</h3>
 <div>
     <h4>Vehicle</h4>
@@ -89,8 +87,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Delete" class="btn btn-default" />
+            @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
         </div>
     }
 </div>
