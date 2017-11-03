@@ -153,7 +153,7 @@ namespace Garage20.Controllers
         }
 
         // POST: NEWVehicles/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Checkout")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
