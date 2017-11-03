@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<Garage20.Models.ListViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Welcome to our Garage";
 }
 
-<h2>Index</h2>
+<h2>List of Parked Vehicles</h2>
 
 @using (Html.BeginForm("Index", "Vehicles", FormMethod.Get))
 {
@@ -20,7 +20,7 @@
                         <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
                     </div>
 
-                    @Html.ActionLink("Park Vehicle", "Create", null, new { @class = "btn btn-info pull-right" })
+                    @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info pull-right" })
                 </div>
             </p>
             <div id="extended-search-panel" class="form-inline collapse">
@@ -35,11 +35,6 @@
         </div>
       </div>
 }
-
-
-            <p>
-                @Html.ActionLink("Create New", "Create")
-            </p>
             <table class="table" id="tblVehicles">
                 <tr>
                     <th onclick="sortTable(0)">
