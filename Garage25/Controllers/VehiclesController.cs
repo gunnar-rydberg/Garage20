@@ -96,9 +96,6 @@ namespace Garage20.Controllers
 
                 garage.Park(vehicle);
 
-                //db.Vehicles.Add(vehicle);
-                //db.SaveChanges();
-
                 return RedirectToAction("Index");
             }
 
@@ -167,8 +164,6 @@ namespace Garage20.Controllers
             var receipt = ParkingLogic.CreateReceipt(vehicle);
 
             garage.CheckOut(vehicle);
-            //db.Vehicles.Remove(vehicle);
-            //db.SaveChanges();
 
             return View("Receipt", receipt);
         }
