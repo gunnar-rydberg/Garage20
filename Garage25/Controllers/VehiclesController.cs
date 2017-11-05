@@ -16,7 +16,7 @@ namespace Garage20.Controllers
         private Garage20Context db = new Garage20Context();
 
         // GET: NEWVehicles
-        public ActionResult Index(string regNo = "", int VehicleTypeId = 0, bool Detailed = false)
+        public ActionResult Index(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "", bool Detailed = false)
         {
             var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
             vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
@@ -26,6 +26,10 @@ namespace Garage20.Controllers
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
             if (regNo != "")
                 vehicles = vehicles.Where(x => x.RegNo.Contains(regNo));
+            if (searchBrand != "")
+                vehicles = vehicles.Where(x => x.Brand.Contains(searchBrand));
+            if (searchModel != "")
+                vehicles = vehicles.Where(x => x.Model.Contains(searchModel));
             if (VehicleTypeId != 0)
                 vehicles = vehicles.Where(x => x.VehicleTypeId == VehicleTypeId);
 
