@@ -28,5 +28,7 @@ namespace Garage20.Models
 
         public virtual ICollection<Vehicle> Vehicles { get; set; }
 
+        public string FullName => FirstName + " " + LastName;
+
     }
 }

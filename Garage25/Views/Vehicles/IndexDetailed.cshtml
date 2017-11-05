@@ -33,34 +33,33 @@
         </div>
     </div>
 
-<table class="table table-striped table-hover">
+<table class="table table-striped table-hover" id="tblVehicles">
     <tr>
-        <th>
-            @*@Html.DisplayNameFor(model => model.Member.FirstName)*@
+        <th onclick="sortTable(0)">
             Owner
         </th>
-        <th>
+        <th onclick="sortTable(1)">
             @Html.DisplayNameFor(model => model.vehicle.VehicleType.Name)
         </th>
-        <th>
+        <th onclick="sortTable(2)">
             @Html.DisplayNameFor(model => model.vehicle.RegNo)
         </th>
-        <th>
+        <th onclick="sortTable(3)">
             @Html.DisplayNameFor(model => model.vehicle.Color)
         </th>
-        <th>
+        <th onclick="sortTable(4)">
             @Html.DisplayNameFor(model => model.vehicle.NoWheels)
         </th>
-        <th>
+        <th onclick="sortTable(5)">
             @Html.DisplayNameFor(model => model.vehicle.Model)
         </th>
-        <th>
+        <th onclick="sortTable(6)">
             @Html.DisplayNameFor(model => model.vehicle.Brand)
         </th>
-        <th>
+        <th onclick="sortTable(7)">
             @Html.DisplayNameFor(model => model.vehicle.Date)
         </th>
-        <th>
+        <th onclick="sortTable(8)">
             @Html.DisplayNameFor(model => model.ParkingTime)
         </th>
         <th></th>
@@ -69,9 +68,8 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.vehicle.Member.FirstName)
-            @Html.DisplayFor(modelItem => item.vehicle.Member.LastName)
-            <!-- TODO Link to member ??? -->
+            @Html.DisplayFor(modelItem => item.vehicle.Member.FullName)
+            @Html.ActionLink("?", "Details", "Members", new { id = item.vehicle.Member.Id }, new { @class = "btn btn-info btn-xs" })
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.vehicle.VehicleType.Name)
@@ -108,3 +106,4 @@
 }
 
 </table>
+<script src="~/Scripts/garage.js"></script>
