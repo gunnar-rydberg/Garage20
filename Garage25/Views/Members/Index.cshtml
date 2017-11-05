@@ -28,15 +28,18 @@
 <table class="table" id="tblVehicles">
     <tr>
         <th onclick="sortTable(0)">
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Id)
         </th>
         <th onclick="sortTable(1)">
-            @Html.DisplayNameFor(model => model.LastName)
+            @Html.DisplayNameFor(model => model.FirstName)
         </th>
         <th onclick="sortTable(2)">
-            @Html.DisplayNameFor(model => model.Telephone)
+            @Html.DisplayNameFor(model => model.LastName)
         </th>
         <th onclick="sortTable(3)">
+            @Html.DisplayNameFor(model => model.Telephone)
+        </th>
+        <th onclick="sortTable(4)">
             @Html.DisplayNameFor(model => model.Mail)
         </th>
         <th></th>
@@ -44,6 +47,9 @@
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Id)
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FirstName)
         </td>

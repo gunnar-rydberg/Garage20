@@ -8,6 +8,7 @@ namespace Garage20.Models
 {
     public class Member
     {
+        [Display(Name = "Member Id")]
         public int Id { get; set; }
 
         [MaxLength(100)]
