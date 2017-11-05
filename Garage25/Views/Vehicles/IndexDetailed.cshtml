@@ -6,10 +6,10 @@
 
 <hr />
 
-@using (Html.BeginForm("IndexDetailed", "Vehicles", FormMethod.Get))
-{
     <div class="panel panel-default">
         <div class="panel-heading">
+@using (Html.BeginForm("IndexDetailed", "Vehicles", FormMethod.Get))
+{
             <p>
                 <div class="form-inline">
                     Reg.no: @Html.TextBox("regNo", null, new { @class = "form-control" })
@@ -25,16 +25,13 @@
             </p>
             <div id="extended-search-panel" class="form-inline collapse">
                 <p>
-                    @*Brand: @Html.TextBox("searchBrand", null, new { @class = "form-control" })
-                        Model: @Html.TextBox("searchModel", null, new { @class = "form-control" })*@
+                    Brand: @Html.TextBox("searchBrand", null, new { @class = "form-control" })
+                    Model: @Html.TextBox("searchModel", null, new { @class = "form-control" })
                 </p>
             </div>
-
-        </div>
-        <div class="panel-body">
+}
         </div>
     </div>
-}
 
 <table class="table table-striped table-hover">
     <tr>
