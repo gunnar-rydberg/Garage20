@@ -14,6 +14,12 @@ namespace Garage20.Controllers
     public class VehiclesController : Controller
     {
         private Garage20Context db = new Garage20Context();
+        private GarageHandler garage;
+
+        public VehiclesController()
+        {
+            garage = new GarageHandler(db);
+        }
 
         // GET: NEWVehicles
         public ActionResult Index(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "", bool Detailed = false)
@@ -37,13 +43,16 @@ namespace Garage20.Controllers
             foreach (var v in vehicles)
                 vehicleList.Add(new ListViewModel {
                     vehicle = v,
-                    ParkingTime = DateTime.Now - v.Date, });
-            
+                    ParkingTime = DateTime.Now - v.Date,
+                });
+
+            ViewBag.TotalCapacity = garage.TotalCapacity;
+            ViewBag.FreeCapacity = garage.FreeCapacity;
+
             if (Detailed)
                 return View("IndexDetailed",vehicleList);
             else
                 return View("Index", vehicleList);
-
         }
 
         public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
@@ -85,8 +94,11 @@ namespace Garage20.Controllers
             {
                 vehicle.Date = DateTime.Now;
 
-                db.Vehicles.Add(vehicle);
-                db.SaveChanges();
+                garage.Park(vehicle);
+
+                //db.Vehicles.Add(vehicle);
+                //db.SaveChanges();
+
                 return RedirectToAction("Index");
             }
 
@@ -154,8 +166,9 @@ namespace Garage20.Controllers
 
             var receipt = ParkingLogic.CreateReceipt(vehicle);
 
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
+            garage.CheckOut(vehicle);
+            //db.Vehicles.Remove(vehicle);
+            //db.SaveChanges();
 
             return View("Receipt", receipt);
         }

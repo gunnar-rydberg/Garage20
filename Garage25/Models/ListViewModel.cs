@@ -13,5 +13,6 @@ namespace Garage20.Models
         [Display(Name = "Parking Time Length")]
         [DisplayFormat(DataFormatString = "{0:%d} day(s) {0:hh} hour(s)", ApplyFormatInEditMode = true)]
         public TimeSpan ParkingTime{ get; set; }
+
     }
 }

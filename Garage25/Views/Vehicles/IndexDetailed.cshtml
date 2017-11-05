@@ -19,8 +19,6 @@
                         <!-- NOTE! you cannot use button tag because it will post the form -->
                         <a class="btn panel-default" data-toggle="collapse" data-target="#extended-search-panel">Extended search</a>
                     </div>
-
-                    @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info pull-right" })
                 </div>
             </p>
             <div id="extended-search-panel" class="form-inline collapse">
@@ -32,6 +30,13 @@
 }
         </div>
     </div>
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info" })
+        <h4 class="pull-right">@ViewBag.FreeCapacity Free parking lots (out of @ViewBag.TotalCapacity)</h4>
+    </div>
+</div>
 
 <table class="table table-striped table-hover" id="tblVehicles">
     <tr>
@@ -61,6 +66,9 @@
         </th>
         <th onclick="sortTable(8)">
             @Html.DisplayNameFor(model => model.ParkingTime)
+        </th>
+        <th onclick="sortTable(9)">
+            Location
         </th>
         <th></th>
     </tr>
@@ -94,6 +102,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ParkingTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.vehicle.ParkingLotsString)
         </td>
         <td>
             <div class="btn-group btn-group-xs">
