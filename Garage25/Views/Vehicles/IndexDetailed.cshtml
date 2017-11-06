@@ -68,8 +68,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.vehicle.Member.FullName)
-            @Html.ActionLink("?", "Details", "Members", new { id = item.vehicle.Member.Id }, new { @class = "btn btn-info btn-xs" })
+            @Html.ActionLink(item.vehicle.Member.FullName, "Details", "Members", new { id = item.vehicle.Member.Id }, null)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.vehicle.VehicleType.Name)
