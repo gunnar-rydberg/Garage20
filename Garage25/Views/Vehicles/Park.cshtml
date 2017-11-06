@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VehicleTypeId, "VehicleTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit()" })
+                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit()", required = "" })
                 @Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,7 +67,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ParkingLotsString, "ParkingLotIds", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("ParkingLotIds", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("ParkingLotIds", null, htmlAttributes: new { @class = "form-control", required = ""})
+                <span class="field-validation-valid text-danger" data-valmsg-replace="true" data-valmsg-for="ParkingLotIds"></span>
             </div>
         </div>
 

@@ -88,23 +88,12 @@ namespace Garage20.Controllers
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
 
-            //For HTML% validation of <select> the first "None" item in the list should have value ""
-            var ll = new List<SelectListData>() { new SelectListData { Value = "", Text = "Select Parking" } };
-            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
-            foreach (var v in db.VehicleTypes.OrderBy(x => x.Name))
-                ll.Add(new SelectListData { Value = $"{v.Id}", Text = v.Name });
-            //vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Select vehicle type" });
-            //ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
-            ViewBag.VehicleTypeId = new SelectList(ll, "Value", "Text");
+            ViewBag.VehicleTypeId = garage.GetVehicleTypes("------");
 
-
-
-            if (vehicleTypeId != 0)
-            {
-                ViewBag.ParkingLotIds = garage.GetParkingLots(vehicleTypeId);
-            }
+            if (vehicleTypeId == 0)
+                ViewBag.ParkingLotIds = new SelectList(new[] { new { Id = "", Name = "Select type first" } }, "Id", "Name");
             else
-                ViewBag.ParkingLotIds = new SelectList(new[] { new { Id = 0, Name = "please select type" } }, "Id", "Name");
+                ViewBag.ParkingLotIds = garage.GetParkingLots(vehicleTypeId, "------");
 
             return View();
         }

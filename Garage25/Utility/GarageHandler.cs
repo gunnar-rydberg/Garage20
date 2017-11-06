@@ -56,31 +56,53 @@ namespace Garage20.Utility
             db.SaveChanges();
         }
 
-        private class ParkingLotSelection
+        private class SelectListData
         {
-            public int StartId { get; set; } // Despite what SelectList docs say these must be properties, not fields.
+            public string Value { get; set; } // Despite what SelectList docs say these must be properties, not fields.
             public string Name { get; set; }
         }
 
-        public SelectList GetParkingLots(int vehicleTypeId)
+        /// <summary>
+        /// Get SelectList (for HTML5 dropdown) of all types in vehicleTypes table
+        /// </summary>
+        public SelectList GetVehicleTypes(string emptyValueName = null)
         {
+            var vehicleTypes = new List<SelectListData>();
+            if (emptyValueName != null)
+                vehicleTypes.Add(new SelectListData { Value = "", Name = emptyValueName });
 
+            foreach (var t in db.VehicleTypes.OrderBy(x => x.Name))
+                vehicleTypes.Add(new SelectListData { Value = t.Id.ToString(), Name = t.Name });
 
-            var parkingLotSelectList = new List<ParkingLotSelection>();
+            return new SelectList(vehicleTypes, "Value", "Name");
+        }
+
+        /// <summary>
+        /// Get SelectList (for HTML5 dropdown) of all available parking lots
+        /// </summary>
+        public SelectList GetParkingLots(int vehicleTypeId, string emptyValueName = null)
+        {
+            var parkingLotSelectList = new List<SelectListData>();
+
+            if (emptyValueName != null)
+                parkingLotSelectList.Add(new SelectListData { Value = "", Name = emptyValueName });
 
             var size = db.VehicleTypes.Find(vehicleTypeId).NumberOfParkingLots;
-            //TODO Raise error on nonexisting vehicleType
+            //TODO Raise error on nonexisting vehicleType ?
 
             if (size <= 1m)
             {
                 var parkingLots = db.ParkingLots.Where(x => !x.Vehicles.Any());
                 foreach (var lot in parkingLots)
-                    parkingLotSelectList.Add(new ParkingLotSelection { StartId = lot.Id, Name = lot.Name });
+                    parkingLotSelectList.Add(new SelectListData { Value= lot.Id.ToString(), Name = lot.Name });
             }
             if (size < 1m)
             {
                 foreach (var lot in findFreeParkingSubSpace2(size))
-                    parkingLotSelectList.Add(new ParkingLotSelection { StartId= lot.Id, Name = lot.Name + " Shared" });
+                    parkingLotSelectList.Add(new SelectListData { Value= lot.Id.ToString(), Name = lot.Name + " Shared" });
+                
+                var padding = parkingLotSelectList.Max(x => x.Value.Length);
+                parkingLotSelectList = parkingLotSelectList.OrderBy(x => x.Value.PadLeft(padding,'0')).ToList();
             }
             if (size > 1m)
             {
@@ -93,11 +115,15 @@ namespace Garage20.Utility
                     else
                         name = lots[0].Name + " through " + lots.Last().Name;
 
-                    parkingLotSelectList.Add(new ParkingLotSelection { StartId = id, Name = name });
+                    parkingLotSelectList.Add(new SelectListData { Value = id.ToString(), Name = name });
                 }
             }
 
-            return new SelectList(parkingLotSelectList, "StartId", "Name");
+            if ((emptyValueName != null && parkingLotSelectList.Count == 1) ||
+               (emptyValueName == null && parkingLotSelectList.Count == 0))
+                parkingLotSelectList = new List<SelectListData> { new SelectListData { Value = "", Name = "No vacant space" } };
+
+            return new SelectList(parkingLotSelectList, "Value", "Name");
         }
 
         /// <summary>
