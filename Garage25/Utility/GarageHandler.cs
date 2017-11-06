@@ -24,14 +24,19 @@ namespace Garage20.Utility
         /// Park vehicle in garage
         /// </summary>
         /// <param name="vehicle"></param>
-        public void Park(Vehicle vehicle)
+        public void Park(Vehicle vehicle, int firstParkingLotId)
         {
             vehicle.ParkingLots = new List<ParkingLot>();
-            var size = db.VehicleTypes.Find(vehicle.VehicleTypeId).NumberOfParkingLots;
-            var parkingLots = findFreeParkingSpace(size);
-            parkingLots.ForEach(vehicle.ParkingLots.Add);
 
+            var size = (int)Decimal.Ceiling(db.VehicleTypes.Find(vehicle.VehicleTypeId).NumberOfParkingLots);
+            var parkingLotIds = Enumerable.Range(firstParkingLotId, size);
+            var parkingLots = db.ParkingLots.Where(x => parkingLotIds.Contains(x.Id))
+                                            .ToList();
+            //TODO Validate that the selected parkinglots are free and throw error if they are not
+
+            parkingLots.ForEach(vehicle.ParkingLots.Add);
             db.Vehicles.Add(vehicle);
+
             db.SaveChanges();
         }
 
@@ -53,7 +58,7 @@ namespace Garage20.Utility
 
         private class ParkingLotSelection
         {
-            public List<int> Ids { get; set; } // Despite what SelectList docs say these must be properties, not fields.
+            public int StartId { get; set; } // Despite what SelectList docs say these must be properties, not fields.
             public string Name { get; set; }
         }
 
@@ -70,29 +75,29 @@ namespace Garage20.Utility
             {
                 var parkingLots = db.ParkingLots.Where(x => !x.Vehicles.Any());
                 foreach (var lot in parkingLots)
-                    parkingLotSelectList.Add(new ParkingLotSelection { Ids = new List<int> { lot.Id }, Name = lot.Name });
+                    parkingLotSelectList.Add(new ParkingLotSelection { StartId = lot.Id, Name = lot.Name });
             }
             if (size < 1m)
             {
                 foreach (var lot in findFreeParkingSubSpace2(size))
-                    parkingLotSelectList.Add(new ParkingLotSelection { Ids = new List<int> { lot.Id }, Name = lot.Name + " Shared" });
+                    parkingLotSelectList.Add(new ParkingLotSelection { StartId= lot.Id, Name = lot.Name + " Shared" });
             }
             if (size > 1m)
             {
                 foreach (var lots in findFreeParkingSpaceMultiple2((int)Decimal.Ceiling(size)))
                 {
-                    var ids = lots.Select(x => x.Id).ToList();
+                    var id = lots.First().Id;
                     string name;
                     if (lots.Count() == 2)
                         name = lots[0].Name + " and " + lots[1].Name;
                     else
                         name = lots[0].Name + " through " + lots.Last().Name;
 
-                    parkingLotSelectList.Add(new ParkingLotSelection { Ids = ids, Name = name });
+                    parkingLotSelectList.Add(new ParkingLotSelection { StartId = id, Name = name });
                 }
             }
 
-            return new SelectList(parkingLotSelectList, "Ids", "Name");
+            return new SelectList(parkingLotSelectList, "StartId", "Name");
         }
 
         /// <summary>

@@ -99,13 +99,16 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle, int ParkingLotIds)
         {
+
             if (ModelState.IsValid)
             {
+                var parkingLots = ParkingLotIds;
+
                 vehicle.Date = DateTime.Now;
 
-                garage.Park(vehicle);
+                garage.Park(vehicle, ParkingLotIds);
 
                 return RedirectToAction("Index");
             }
