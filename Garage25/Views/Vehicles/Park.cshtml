@@ -6,7 +6,8 @@
 
 <h2>Register and Park</h2>
 
-@using (Html.BeginForm()) 
+<!-- Form is defined as Get to allow update of parkingLots list. The "Park" submit button still sends a POST message -->
+@using (Html.BeginForm("Park", "Vehicles", FormMethod.Get)) 
 {
     @Html.AntiForgeryToken()
     
@@ -58,11 +59,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.VehicleTypeId, "VehicleTypeId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control", onchange = "this.form.submit()" })
                 @Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })
-
-                <!-- Here we should add some -->
-                <input type="submit" formmethod="get" value="Submit using GET">
             </div>
         </div>
 
@@ -70,12 +68,8 @@
             @Html.LabelFor(model => model.ParkingLotsString, "ParkingLotIds", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.DropDownList("ParkingLotIds", null, htmlAttributes: new { @class = "form-control" })
-                @*@Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })*@
             </div>
         </div>
-
-
-        ParkingLotIds
 
         <div class="form-group">
             @Html.LabelFor(model => model.MemberId, "MemberId", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -87,7 +81,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Park" class="btn btn-default" />
+                <input type="submit" value="Park" formmethod ="post" class="btn btn-default" />
             </div>
         </div>
     </div>
