@@ -80,7 +80,11 @@ namespace Garage20.Controllers
         public ActionResult Park(string RegNo = "", string Color = "", string Brand = "", string Model = "" , string NoWheels = "" , int vehicleTypeId = 0)
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
-            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
+            
+            //For HTML% validation of <select> the first "None" item in the list should have value ""
+            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
+            vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Select vehicle type" });
+            ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
 
             if (vehicleTypeId != 0)
             {
