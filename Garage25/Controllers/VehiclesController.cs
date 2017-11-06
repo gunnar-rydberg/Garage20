@@ -77,15 +77,13 @@ namespace Garage20.Controllers
         }
 
         // GET: NEWVehicles/Create
-        public ActionResult Park(int vehicleTypeId = 0)
+        public ActionResult Park(string RegNo = "", string Color = "", string Brand = "", string Model = "" , string NoWheels = "" , int vehicleTypeId = 0)
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
             ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
 
             if (vehicleTypeId != 0)
             {
-                //var parkingLots = garage.GetParkingLots(vehicleTypeId);
-                //ViewBag.ParkingLotIds = new SelectList(db.ParkingLots, "Id", "Name");
                 ViewBag.ParkingLotIds = garage.GetParkingLots(vehicleTypeId);
             }
             else
