@@ -13,7 +13,7 @@ namespace Garage20.Models
 
         public int Id { get; set; }
 
-        public VehicleTypeEnum Type { get; set; } //TODO Remove me
+//        public VehicleTypeEnum Type { get; set; } //TODO Remove me
 
         [Display(Name = "Reg.No")]
         [Required]

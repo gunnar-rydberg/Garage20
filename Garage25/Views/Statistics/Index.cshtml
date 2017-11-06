@@ -15,7 +15,14 @@
             <div class="row">
                 @{ foreach (var t in Model.Types)
                     {
-                        var imgFile = "/Images/" + t.Key + ".svg";
+                        string imgFile = "/Images/" + t.Key + ".svg"; ;
+                        var absolutePath = Server.MapPath(imgFile);
+
+                        if (!File.Exists(absolutePath))
+                        {
+                            imgFile = "/Images/Unknown.svg";
+                        }
+
                         <div class="col-sm-2">
                             @t.Value&nbsp;<img src="@imgFile" alt="@t.Key" style="width: 10%;" /> @t.Key
                         </div>
