@@ -6,7 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace Garage20.Utility
+namespace Garage20.UtilityFOO
 {
     public class GarageHandler
     {
@@ -53,8 +53,8 @@ namespace Garage20.Utility
 
         private class ParkingLotSelection
         {
-            public List<int> Ids { get; set; } // Despite what SelectList docs say these must be properties, not fields.
-            public string Name { get; set; }
+            public List<int> Ids;
+            public string Name;
         }
 
         public SelectList GetParkingLots(int vehicleTypeId)
@@ -66,33 +66,22 @@ namespace Garage20.Utility
             var size = db.VehicleTypes.Find(vehicleTypeId).NumberOfParkingLots;
             //TODO Raise error on nonexisting vehicleType
 
-            if (size <= 1m)
+            // Find empty spaces (size == 1.0)
+            var parkingLots = db.ParkingLots.Where(x => !x.Vehicles.Any());
+
+            foreach (var lot in parkingLots)
+                parkingLotSelectList.Add(new ParkingLotSelection { Ids=new List<int>{ lot.Id }, Name=lot.Name });
+
+            // Find small spaces
+            if(size < 1m)
             {
-                var parkingLots = db.ParkingLots.Where(x => !x.Vehicles.Any());
-                foreach (var lot in parkingLots)
-                    parkingLotSelectList.Add(new ParkingLotSelection { Ids = new List<int> { lot.Id }, Name = lot.Name });
-            }
-            if (size < 1m)
-            {
-                foreach (var lot in findFreeParkingSubSpace2(size))
+                foreach(var lot in findFreeParkingSubSpace2(size))
                     parkingLotSelectList.Add(new ParkingLotSelection { Ids = new List<int> { lot.Id }, Name = lot.Name + " Shared" });
             }
-            if (size > 1m)
-            {
-                foreach (var lots in findFreeParkingSpaceMultiple2((int)Decimal.Ceiling(size)))
-                {
-                    var ids = lots.Select(x => x.Id).ToList();
-                    string name;
-                    if (lots.Count() == 2)
-                        name = lots[0].Name + " and " + lots[1].Name;
-                    else
-                        name = lots[0].Name + " through " + lots.Last().Name;
 
-                    parkingLotSelectList.Add(new ParkingLotSelection { Ids = ids, Name = name });
-                }
-            }
+            var parkingLotsSelect = new SelectList(parkingLots, "Id", "Name");
 
-            return new SelectList(parkingLotSelectList, "Ids", "Name");
+            return parkingLotsSelect;
         }
 
         /// <summary>
@@ -104,7 +93,7 @@ namespace Garage20.Utility
             var usedSpaces = db.ParkingLots.Where(x => x.Vehicles.Any())
                                   .Select(x => new { Id = x.Id, Sizes = x.Vehicles.Select(y => y.VehicleType.NumberOfParkingLots) })
                                   .ToList();
-
+            
             foreach (var parkingSpace in usedSpaces)
             {
                 var spaceSum = size;
@@ -113,22 +102,7 @@ namespace Garage20.Utility
                 if (spaceSum <= 1m)
                     yield return db.ParkingLots.Where(x => x.Id == parkingSpace.Id).First();
             }
-        }
-
-        private IEnumerable<List<ParkingLot>> findFreeParkingSpaceMultiple2(int size)
-        {
-            //TODO? query db for a List<{Id, bool}> based on free parking space
-            //      then search for adjacent free space in that local list
-
-
-            for (int i = 0; i < TotalCapacity - size; i++)
-            {
-                var q = db.ParkingLots.OrderBy(x => x.Id)
-                                      .Skip(i)
-                                      .Take(size);
-                if (q.All(x => !x.Vehicles.Any()))
-                    yield return q.ToList();
-            }
+            //return null; // Remove for IEnumerabel ???
         }
 
         /// <summary>
@@ -138,10 +112,10 @@ namespace Garage20.Utility
         {
             var parkingLots = new List<ParkingLot>();
 
-            if (size == 1m)
+            if(size == 1m)
             {
                 var parkingLot = findFreeParkingSpace();
-                if (parkingLot != null)
+                if(parkingLot != null)
                     parkingLots.Add(parkingLot);
             }
             else if (size < 1m)
@@ -201,7 +175,7 @@ namespace Garage20.Utility
                 if (q.All(x => !x.Vehicles.Any()))
                     return q.ToList();
             }
-            return new List<ParkingLot>();
+            return new List<ParkingLot>(); 
         }
 
     }

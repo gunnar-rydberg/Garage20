@@ -6,7 +6,6 @@
 
 <h2>Register and Park</h2>
 
-
 @using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
@@ -61,8 +60,22 @@
             <div class="col-md-10">
                 @Html.DropDownList("VehicleTypeId", null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })
+
+                <!-- Here we should add some -->
+                <input type="submit" formmethod="get" value="Submit using GET">
             </div>
         </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ParkingLotsString, "ParkingLotIds", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ParkingLotIds", null, htmlAttributes: new { @class = "form-control" })
+                @*@Html.ValidationMessageFor(model => model.VehicleTypeId, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+
+        ParkingLotIds
 
         <div class="form-group">
             @Html.LabelFor(model => model.MemberId, "MemberId", htmlAttributes: new { @class = "control-label col-md-2" })

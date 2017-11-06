@@ -14,6 +14,7 @@ namespace Garage20.Controllers
     public class VehiclesController : Controller
     {
         private Garage20Context db = new Garage20Context();
+
         private GarageHandler garage;
 
         public VehiclesController()
@@ -76,10 +77,20 @@ namespace Garage20.Controllers
         }
 
         // GET: NEWVehicles/Create
-        public ActionResult Park()
+        public ActionResult Park(int vehicleTypeId = 0)
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
             ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
+
+            if (vehicleTypeId != 0)
+            {
+                //var parkingLots = garage.GetParkingLots(vehicleTypeId);
+                //ViewBag.ParkingLotIds = new SelectList(db.ParkingLots, "Id", "Name");
+                ViewBag.ParkingLotIds = garage.GetParkingLots(vehicleTypeId);
+            }
+            else
+                ViewBag.ParkingLotIds = new SelectList(new[] { new { Id = 0, Name = "please select type" } }, "Id", "Name");
+
             return View();
         }
 
