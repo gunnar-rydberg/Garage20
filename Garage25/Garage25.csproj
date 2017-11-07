@@ -200,7 +200,6 @@
     <Compile Include="Models\VehicleType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility\GarageHandler.cs" />
-    <Compile Include="Utility\GarageHandler2.cs" />
     <Compile Include="Utility\Misc.cs" />
     <Compile Include="Utility\ParkingLogic.cs" />
   </ItemGroup>
