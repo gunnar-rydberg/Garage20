@@ -28,6 +28,8 @@ namespace Garage20.Controllers
             ViewBag.VehicleTypeId = garage.GetVehicleTypes("Any vehicle type");
             ViewBag.TotalCapacity = garage.TotalCapacity;
             ViewBag.FreeCapacity = garage.FreeCapacity;
+            ViewBag.Free = (Convert.ToDouble(garage.FreeCapacity) / garage.TotalCapacity) * 100;
+            ViewBag.Used = (Convert.ToDouble(garage.TotalCapacity - garage.FreeCapacity) / garage.TotalCapacity) * 100;
 
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
             if (regNo != "")

@@ -48,6 +48,12 @@ textarea {
     overflow: auto;
 }
 
+.progress {
+    border: 1px solid #000000;
+    box-shadow: 3px 3px 3px #888888;
+}
+}
+
 .indexlist-buttongroup {
     min-width:170px
 }
