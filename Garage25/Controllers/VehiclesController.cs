@@ -15,13 +15,19 @@ namespace Garage20.Controllers
     {
         private Garage20Context db = new Garage20Context();
 
+        private GarageHandler garage;
+
+        public VehiclesController()
+        {
+            garage = new GarageHandler(db);
+        }
+
         // GET: NEWVehicles
         public ActionResult Index(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "", bool Detailed = false)
         {
-            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
-            vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
-            ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
-
+            ViewBag.VehicleTypeId = garage.GetVehicleTypes("Any vehicle type");
+            ViewBag.TotalCapacity = garage.TotalCapacity;
+            ViewBag.FreeCapacity = garage.FreeCapacity;
 
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
             if (regNo != "")
@@ -37,18 +43,18 @@ namespace Garage20.Controllers
             foreach (var v in vehicles)
                 vehicleList.Add(new ListViewModel {
                     vehicle = v,
-                    ParkingTime = DateTime.Now - v.Date, });
-            
+                    ParkingTime = DateTime.Now - v.Date,
+                });
+
             if (Detailed)
                 return View("IndexDetailed",vehicleList);
             else
                 return View("Index", vehicleList);
-
         }
 
-        public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
+        public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "")
         {
-            return Index(regNo, VehicleTypeId, Detailed: true);
+            return Index(regNo, VehicleTypeId, searchBrand, searchModel, Detailed: true);
         }
 
         // GET: NEWVehicles/Details/5
@@ -66,11 +72,25 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
+        //TODO remove/move to utility
+        private class SelectListData
+        {
+            public string Value { get; set; }
+            public string Text { get; set; }
+        }
+
         // GET: NEWVehicles/Create
-        public ActionResult Park()
+        public ActionResult Park(string RegNo = "", string Color = "", string Brand = "", string Model = "" , string NoWheels = "" , int vehicleTypeId = 0)
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
-            ViewBag.VehicleTypeId = new SelectList(db.VehicleTypes, "Id", "Name");
+
+            ViewBag.VehicleTypeId = garage.GetVehicleTypes("------");
+
+            if (vehicleTypeId == 0)
+                ViewBag.ParkingLotIds = new SelectList(new[] { new { Id = "", Name = "Select type first" } }, "Id", "Name");
+            else
+                ViewBag.ParkingLotIds = garage.GetParkingLots(vehicleTypeId, "------");
+
             return View();
         }
 
@@ -79,14 +99,17 @@ namespace Garage20.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle)
+        public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle, int ParkingLotIds)
         {
+
             if (ModelState.IsValid)
             {
+                var parkingLots = ParkingLotIds;
+
                 vehicle.Date = DateTime.Now;
 
-                db.Vehicles.Add(vehicle);
-                db.SaveChanges();
+                garage.Park(vehicle, ParkingLotIds);
+
                 return RedirectToAction("Index");
             }
 
@@ -154,8 +177,7 @@ namespace Garage20.Controllers
 
             var receipt = ParkingLogic.CreateReceipt(vehicle);
 
-            db.Vehicles.Remove(vehicle);
-            db.SaveChanges();
+            garage.CheckOut(vehicle);
 
             return View("Receipt", receipt);
         }

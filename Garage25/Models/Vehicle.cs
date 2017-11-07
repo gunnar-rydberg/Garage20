@@ -37,5 +37,8 @@ namespace Garage20.Models
         public virtual VehicleType VehicleType { get; set; }
         public virtual Member Member { get; set; }
         public virtual ICollection<ParkingLot> ParkingLots { get; set; }
+
+
+        public string ParkingLotsString => String.Join(",", ParkingLots.Select(x => x.Name));
     }
 }

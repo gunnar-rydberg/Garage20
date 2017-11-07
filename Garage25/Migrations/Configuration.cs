@@ -41,11 +41,11 @@ namespace Garage20.Migrations
 
             var members = new[]
             {
-                new Member {Id=1, FirstName="Adam", LastName="Adamsson", Telephone="999 12345678" , Mail="foo@bar.com"},
-                new Member {Id=2, FirstName="Berit", LastName="Brül", Telephone="999 7777777" , Mail="foo2@bar.com"},
+                new Member { FirstName="Adam", LastName="Adamsson", Telephone="999 12345678" , Mail="foo@bar.com"},
+                new Member { FirstName="Berit", LastName="Brül", Telephone="999 7777777" , Mail="foo2@bar.com"},
             };
             db.Members.AddOrUpdate(
-                x => x.Id,
+                x => new { x.FirstName, x.LastName },
                 members);
             db.SaveChanges();
 
