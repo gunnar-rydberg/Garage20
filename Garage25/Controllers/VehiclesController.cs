@@ -59,7 +59,7 @@ namespace Garage20.Controllers
             return Index(regNo, VehicleTypeId, searchBrand, searchModel, Detailed: true);
         }
 
-        // GET: NEWVehicles/Details/5
+        // GET: 
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -74,14 +74,9 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        //TODO remove/move to utility
-        private class SelectListData
-        {
-            public string Value { get; set; }
-            public string Text { get; set; }
-        }
-
-        // GET: NEWVehicles/Create
+        // GET: Vehicles/Park
+        //      Vehicletype is typically empty on first call, which generates an empty parkinglot selectlist.
+        //      This GET method is called again when the user selects a vehicletype and the parkinglot list gets generated.
         public ActionResult Park(string RegNo = "", string Color = "", string Brand = "", string Model = "" , string NoWheels = "" , int vehicleTypeId = 0)
         {
             ViewBag.MemberId = new SelectList(db.Members, "Id", "FirstName");
@@ -96,14 +91,13 @@ namespace Garage20.Controllers
             return View();
         }
 
-        // POST: NEWVehicles/Create
+        // POST: 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Park([Bind(Include = "Id,RegNo,Color,NoWheels,Model,Brand,VehicleTypeId,MemberId")] Vehicle vehicle, int ParkingLotIds)
         {
-
             if (ModelState.IsValid)
             {
                 var parkingLots = ParkingLotIds;
@@ -120,7 +114,7 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // GET: NEWVehicles/Edit/5
+        // GET: 
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -137,7 +131,7 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // POST: NEWVehicles/Edit/5
+        // POST: Vehicles/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -155,7 +149,7 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // GET: NEWVehicles/Delete/5
+        // GET: Vehicles/Checkout
         public ActionResult Checkout(int? id)
         {
             if (id == null)
@@ -170,7 +164,7 @@ namespace Garage20.Controllers
             return View(vehicle);
         }
 
-        // POST: NEWVehicles/Delete/5
+        // POST: Vehicles/Checkout
         [HttpPost, ActionName("Checkout")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -193,72 +187,5 @@ namespace Garage20.Controllers
             base.Dispose(disposing);
         }
 
-
-        //public ActionResult Sort(string sortOrder, string column)
-        //{
-        //    var vehicles = new List<Vehicle>();
-        //    //var vehicles = db.Vehicles.ToList().ToList();
-
-        //    if (sortOrder == null || sortOrder == "desc")
-        //    {
-        //        switch (column)
-        //        {
-        //            case "type":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Type).ToList();
-        //                break;
-        //            case "regno":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.RegNo).ToList();
-        //                break;
-        //            case "color":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Color).ToList();
-        //                break;
-        //            case "nowheels":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.NoWheels).ToList();
-        //                break;
-        //            case "model":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Model).ToList();
-        //                break;
-        //            case "brand":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Brand).ToList();
-        //                break;
-        //            case "date":
-        //                vehicles = db.Vehicles.OrderByDescending(e => e.Date).ToList();
-        //                break;
-        //        }
-        //        ViewBag.SortTypeOrder = "asc";
-        //     //   ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet";
-        //    }
-        //    else
-        //    {
-        //        switch (column)
-        //        {
-        //            case "type":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Type).ToList();
-        //                break;
-        //            case "regno":
-        //                vehicles = db.Vehicles.OrderBy(e => e.RegNo).ToList();
-        //                break;
-        //            case "color":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Color).ToList();
-        //                break;
-        //            case "nowheels":
-        //                vehicles = db.Vehicles.OrderBy(e => e.NoWheels).ToList();
-        //                break;
-        //            case "model":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Model).ToList();
-        //                break;
-        //            case "brand":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Brand).ToList();
-        //                break;
-        //            case "date":
-        //                vehicles = db.Vehicles.OrderBy(e => e.Date).ToList();
-        //                break;
-        //        }
-        //        ViewBag.SortTypeOrder = "desc";
-        //    //    ViewBag.FirstNameSortIcon = "glyphicon glyphicon-sort-by-alphabet-alt";
-        //    }
-
-        //    return View("Index", vehicles);
-        //}
     }
 }
