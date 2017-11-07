@@ -107,5 +107,21 @@ namespace Garage20.Controllers
         //        .GetBytes("png");
         //        return File(chart, "image/bytes");
         //    }
+
+        public ActionResult GarageUsage()
+        {
+            var u = db.Vehicles.Select(v => v.Date);
+            /*
+            foreach (var d in u.Distinct())
+            {
+                days = d.Day
+            }
+            */
+            var chart = new Chart(300, 200, theme: ChartTheme.Vanilla3D)
+                .AddTitle("Parkinglots")
+                .AddSeries(chartType: "Column", xField: "Test", yFields: u.ToString());
+
+            return File(chart.ToWebImage().GetBytes(), "image/png");
+        }
     }
 }
