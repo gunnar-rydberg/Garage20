@@ -52,3 +52,14 @@ textarea {
     border: 1px solid #000000;
     box-shadow: 3px 3px 3px #888888;
 }
+
+.indexlist-buttongroup {
+    min-width:170px
+}
+
+@media (max-width: 768px){
+    .indexlist-buttongroup {
+        min-width: inherit
+    }
+}
+
