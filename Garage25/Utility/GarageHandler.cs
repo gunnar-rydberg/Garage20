@@ -130,19 +130,10 @@ namespace Garage20.Utility
         /// </summary>
         private IEnumerable<ParkingLot> findFreeParkingSubSpace(decimal size)
         {
-            //TODO write this fantastic method using only LINQ (use count())
-            var usedSpaces = db.ParkingLots.Where(x => x.Vehicles.Any())
-                                  .Select(x => new { Id = x.Id, Sizes = x.Vehicles.Select(y => y.VehicleType.NumberOfParkingLots) })
-                                  .ToList();
-
-            foreach (var parkingSpace in usedSpaces)
-            {
-                var spaceSum = size;
-                foreach (var s in parkingSpace.Sizes)
-                    spaceSum += s;
-                if (spaceSum <= 1m)
-                    yield return db.ParkingLots.Where(x => x.Id == parkingSpace.Id).First();
-            }
+            var maxSpace = 1m - size;
+            return db.ParkingLots.Where(x => x.Vehicles.Any())
+                                 .Where(x => x.Vehicles.Sum(y => y.VehicleType.NumberOfParkingLots) <= maxSpace)
+                                 .AsEnumerable();
         }
 
         /// <summary>
