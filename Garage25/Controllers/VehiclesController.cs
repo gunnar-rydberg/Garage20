@@ -25,10 +25,9 @@ namespace Garage20.Controllers
         // GET: NEWVehicles
         public ActionResult Index(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "", bool Detailed = false)
         {
-            var vehicleTypeList = db.VehicleTypes.OrderBy(x => x.Name).ToList();
-            vehicleTypeList.Insert(0, new VehicleType { Id = 0, Name = "Any vehicle type" });
-            ViewBag.VehicleTypeId = new SelectList(vehicleTypeList, "Id", "Name");
-
+            ViewBag.VehicleTypeId = garage.GetVehicleTypes("Any vehicle type");
+            ViewBag.TotalCapacity = garage.TotalCapacity;
+            ViewBag.FreeCapacity = garage.FreeCapacity;
 
             var vehicles = db.Vehicles.Include(v => v.Member).Include(v => v.VehicleType);
             if (regNo != "")
@@ -47,18 +46,15 @@ namespace Garage20.Controllers
                     ParkingTime = DateTime.Now - v.Date,
                 });
 
-            ViewBag.TotalCapacity = garage.TotalCapacity;
-            ViewBag.FreeCapacity = garage.FreeCapacity;
-
             if (Detailed)
                 return View("IndexDetailed",vehicleList);
             else
                 return View("Index", vehicleList);
         }
 
-        public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0)
+        public ActionResult IndexDetailed(string regNo = "", int VehicleTypeId = 0, string searchBrand = "", string searchModel = "")
         {
-            return Index(regNo, VehicleTypeId, Detailed: true);
+            return Index(regNo, VehicleTypeId, searchBrand, searchModel, Detailed: true);
         }
 
         // GET: NEWVehicles/Details/5
