@@ -185,6 +185,10 @@
     <Compile Include="Migrations\201711021059433_init.Designer.cs">
       <DependentUpon>201711021059433_init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201711060922322_RemoveTypeEnum.cs" />
+    <Compile Include="Migrations\201711060922322_RemoveTypeEnum.Designer.cs">
+      <DependentUpon>201711060922322_RemoveTypeEnum.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Garage20Context.cs" />
     <Compile Include="Models\ListViewModel.cs" />
@@ -338,6 +342,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201711021059433_init.resx">
       <DependentUpon>201711021059433_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201711060922322_RemoveTypeEnum.resx">
+      <DependentUpon>201711060922322_RemoveTypeEnum.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

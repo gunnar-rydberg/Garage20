@@ -29,12 +29,12 @@ namespace Garage20.Controllers
                 stats.Time += now - d;
             }
 
-            var vehicleTypes = db.Vehicles.Select(v => v.Type).Distinct();
+            var vehicleTypes = db.Vehicles.Select(v => v.VehicleType).Distinct();
 
             foreach (var t in vehicleTypes)
             {
-                int n = db.Vehicles.Count(v => v.Type == t);
-                stats.Types.Add(t.ToString(), n);
+                int n = db.Vehicles.Count(v => v.VehicleType.Name == t.Name);
+                stats.Types.Add(t.Name, n);
             }
 
             stats.Price = (int)Math.Ceiling(stats.Time.TotalHours) * ParkingLogic.HOURLY_PRICE_PER_PARKING_LOT;

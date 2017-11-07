@@ -60,7 +60,7 @@ namespace Garage20.Migrations
             var vehicles = new[]
             {
                 new Vehicle {RegNo="ABC-123", Brand="Saab", Model="9000", Date=new DateTime(2017,11,01),
-                             Type=VehicleTypeEnum.Car,
+                             //Type=VehicleTypeEnum.Car,
                              MemberId=members.First(x => x.FirstName == "Adam").Id,
                              VehicleTypeId=vehicleTypes.First(x => x.Name == "Car").Id
                              }
