@@ -28,9 +28,11 @@ namespace Garage20.Models
         [Display(Name = "Check in time")]
         public DateTime Date { get; set; }
 
-//        [ForeignKey("VehicleType")]
+        //        [ForeignKey("VehicleType")]
+        [Display(Name = "Vehicle type")]
         public int VehicleTypeId { get; set; }
-//        [ForeignKey("Member")]
+        //        [ForeignKey("Member")]
+        [Display(Name = "Vehicle owner")]
         public int MemberId { get; set; }
 
 
@@ -38,7 +40,7 @@ namespace Garage20.Models
         public virtual Member Member { get; set; }
         public virtual ICollection<ParkingLot> ParkingLots { get; set; }
 
-
+        [Display(Name = "Parking space")]
         public string ParkingLotsString => String.Join(",", ParkingLots.Select(x => x.Name));
     }
 }
