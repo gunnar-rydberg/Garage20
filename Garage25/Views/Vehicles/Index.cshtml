@@ -35,6 +35,16 @@
             <div class="panel-body">
                 @Html.ActionLink("Park Vehicle", "Park", null, new { @class = "btn btn-info" })
                 <h4 class="pull-right">@ViewBag.FreeCapacity Free parking lots (out of @ViewBag.TotalCapacity)</h4>
+                <p>
+                 <div class="progress">
+                    <div class="progress-bar progress-bar-success" role="progressbar" style="width:@ViewBag.Free%">
+                        Free parking lots @ViewBag.Free%
+                    </div>
+                    <div class="progress-bar progress-bar-warning" role="progressbar" style="width:@ViewBag.Used%">
+                        Used @ViewBag.Used%
+                    </div>
+                </div>
+                </p>
             </div>
         </div>
 
