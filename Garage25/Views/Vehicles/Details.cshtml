@@ -39,7 +39,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Color)
+            <div style="width: 40px; height: 20px; border-radius: 8px/4px; border: 1px solid black; background-color: @Model.Color;"></div>
         </dd>
 
         <dt>
@@ -86,5 +86,5 @@
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-default" })
-    @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+    @Html.ActionLink("Back to List", null, null, null, new { href = Request.UrlReferrer, @class = "btn btn-default" })
 </p>

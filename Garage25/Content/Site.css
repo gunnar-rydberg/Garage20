@@ -39,3 +39,11 @@ textarea {
 .garage-navbar {
     background-color: #333333;
 }
+
+.nomargin {
+    padding: 0px !important;
+}
+
+.flow {
+    overflow: auto;
+}
